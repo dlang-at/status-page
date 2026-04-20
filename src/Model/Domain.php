@@ -11,7 +11,7 @@ final class Domain
 {
     public function __construct(
         public ?DateTimeImmutable $testedAt,
-        public ?DateTimeImmutable $createdAt,
+        public ?DateTimeImmutable $expiresAt,
         public ?int $remainingDays,
         public string $source,
     ) {
@@ -24,9 +24,9 @@ final class Domain
         }
 
         return new self(
-            DateTimeFactory::makeOrNull($data['testedAt']),
-            DateTimeFactory::makeOrNull($data['createdAt']),
-            $data['remainingDays'],
+            DateTimeFactory::makeOrNull($data['tested_at']),
+            DateTimeFactory::makeOrNull($data['expires_at']),
+            $data['remaining_days'],
             $data['source'],
         );
     }
