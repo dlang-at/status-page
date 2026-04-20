@@ -1,0 +1,11 @@
+{parameters array $checks}
+<section>
+    <h2 class="d-none">Services</h2>
+    <div class="container-fluid">
+        <ul class="row list-unstyled">
+            {foreach $checks as $check}
+                {embed 'DashboardEntry.latte', check: $check}{/embed}
+            {/foreach}
+        </ul>
+    </div>
+</section>

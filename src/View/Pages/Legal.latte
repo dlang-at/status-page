@@ -1,0 +1,9 @@
+{extends '../Layout/Base.latte'}
+{var $navGroup = 'legal'}
+{var $title = $_ENV['PAGE_LEGAL_LABEL']}
+
+{block main}
+    <div>
+        {$legalPageText|noescape}
+    </div>
+{/block}

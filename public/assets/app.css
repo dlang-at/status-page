@@ -1,0 +1,14 @@
+@import "fonts.css";
+@import "theme.css";
+
+body > main {
+    min-height: calc(100vh - 3.5rem - 2rem - var(--bs-border-width));
+}
+
+body > footer {
+    height: 2rem;
+}
+
+.dashboard-entry h3 {
+    font-size: var(--bs-body-font-size);
+}

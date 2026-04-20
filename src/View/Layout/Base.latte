@@ -1,0 +1,16 @@
+{parameters $title = 'Untitled'}
+<!DOCTYPE html>
+<html lang="en">
+{include 'Head.latte'}
+<body>
+<main class="container-xxl py-1">
+    <h1>{$title}</h1>
+    {block main}{/block}
+</main>
+<footer class="container-fluid">
+    <p>Server time: <code>{date(DateTimeInterface::ATOM)}</code></p>
+</footer>
+{include 'Nav.latte'}
+<script src="/assets/bootstrap.min.js"></script>
+</body>
+</html>

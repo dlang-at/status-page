@@ -1,0 +1,31 @@
+{parameters DlangAT\StatusPage\Model\Check $check}
+<li class="dashboard-entry col-12 col-md-6 col-lg-6 col-xl-4 col-xxl-3 p-1">
+    <div class="card w-100 h-100">
+        <a href="#" class="text-reset text-decoration-none">
+            <div class="card-body">
+                <div class="status-indicator">
+                    {if $check->isDegraded()}
+                        <span class="badge text-bg-warning">Degraded</span>
+                        <small>since {$check->downSince | formatDatetime}</small>
+                    {elseif $check->isRecovering()}
+                        <span class="badge text-bg-info">Recovering</span>
+                        <small>since {$check->upSince | formatDateTime}</small>
+                    {elseif $check->down}
+                        <span class="badge text-bg-danger">Down</span>
+                        <small>since {$check->downSince | formatDateTime}</small>
+                    {else}
+                        <span class="badge text-bg-success">Up</span>
+                        <small>since {$check->upSince | formatDateTime}</small>
+                    {/if}
+                </div>
+                <h3 class="card-title">
+                    {if $check->alias !== null}
+                        {$check->alias}
+                    {else}
+                        {$check->url}
+                    {/if}
+                </h3>
+            </div>
+        </a>
+    </div>
+</li>

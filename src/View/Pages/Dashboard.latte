@@ -1,0 +1,24 @@
+{extends '../Layout/Base.latte'}
+{parameters DlangAT\StatusPage\Model\Check[] $checks, int $downCount}
+{var $navGroup = 'dashboard'}
+{var $title = 'Dashboard'}
+
+{block main}
+    {if $downCount > 0}
+        <div class="alert alert-danger">
+            {$downCount}
+            {if $downCount === 1}
+                service is
+            {else}
+                services are
+            {/if}
+            down.
+        </div>
+    {else}
+        <div class="alert alert-success">
+            All services are up.
+        </div>
+    {/if}
+
+    {embed '../Components/DashboardEntries.latte', checks: $checks}{/embed}
+{/block}
