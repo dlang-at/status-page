@@ -1,0 +1,28 @@
+{
+    "name": "dlang-at/status-page",
+    "description": "Status page for the D Programming Language infrastructure.",
+    "type": "project",
+    "license": "GPL-2.0-only",
+    "authors": [
+        {
+            "name": "Mindy Batek"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "DlangAT\\StatusPage\\": "src/"
+        }
+    },
+    "minimum-stability": "stable",
+    "require": {
+        "php": "^8.4",
+        "guzzlehttp/guzzle": "^7.10",
+        "guzzlehttp/psr7": "^2.9",
+        "latte/latte": "^3.1",
+        "php-di/php-di": "^7.1",
+        "php-di/slim-bridge": "^3.4",
+        "slim/slim": "^4.15",
+        "twbs/bootstrap": "^5.3",
+        "vlucas/phpdotenv": "^5.6"
+    }
+}
