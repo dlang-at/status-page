@@ -4,6 +4,8 @@
 {var $title = 'Dashboard'}
 
 {block main}
+    {embed '../Components/DashboardEntries.latte', checks: $checks}{/embed}
+
     {if $downCount > 0}
         <div class="alert alert-danger">
             {$downCount}
@@ -19,6 +21,4 @@
             All services are up.
         </div>
     {/if}
-
-    {embed '../Components/DashboardEntries.latte', checks: $checks}{/embed}
 {/block}
