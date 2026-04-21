@@ -44,10 +44,13 @@ final class DI
                 $isProd = $container->get('isProd');
 
                 if ($isProd) {
-                    $tplTmpDir = $container->get('paths.tmp') . '/tpl';
-                    mkdir($tplTmpDir, 0750, true);
+                    $tplTmpDir = $container->get('path.tmp') . '/tpl';
 
-                    $latte->setCacheDirectory('tpl');
+                    if (!file_exists($tplTmpDir)) {
+                        @mkdir($tplTmpDir, 0750, true);
+                    }
+
+                    $latte->setCacheDirectory($tplTmpDir);
                     $latte->setAutoRefresh(false);
                 }
 
@@ -111,7 +114,10 @@ final class DI
 
         if ($this->isProd()) {
             $diTmpPath = $tmpPath . '/di';
-            mkdir($diTmpPath, 0750, true);
+
+            if (!file_exists($diTmpPath)) {
+                @mkdir($diTmpPath, 0750, true);
+            }
 
             $proxies = $diTmpPath . '/proxies';
 
