@@ -1,11 +1,27 @@
-{parameters array $checks}
+{parameters DlangAT\StatusPage\Model\Check[] $checks}
 <section>
     <h2 class="d-none">Services</h2>
-    <div class="container-fluid">
-        <ul class="row list-unstyled">
-            {foreach $checks as $check}
-                {embed 'DashboardEntry.latte', check: $check}{/embed}
-            {/foreach}
-        </ul>
-    </div>
+    <section>
+        <h3 class="d-none">Alerts</h3>
+        <div class="container-fluid g-0">
+            <ul class="row list-unstyled g-2">
+                {foreach $checks as $check}
+                    {if !$check->isUpConfirmed()}
+                        {embed 'DashboardEntry.latte', check: $check}{/embed}
+                    {/if}
+                {/foreach}
+            </ul>
+    </section>
+    <section>
+        <h3 class="d-none">Up</h3>
+        <div class="container-fluid g-0">
+            <ul class="row list-unstyled g-2">
+                {foreach $checks as $check}
+                    {if $check->isUpConfirmed()}
+                        {embed 'DashboardEntry.latte', check: $check}{/embed}
+                    {/if}
+                {/foreach}
+            </ul>
+        </div>
+    </section>
 </section>

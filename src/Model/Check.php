@@ -45,6 +45,11 @@ final class Check
         return ($this->down && ($this->downSince === null));
     }
 
+    public function isUpConfirmed(): bool
+    {
+        return (!$this->down && ($this->upSince !== null));
+    }
+
     static function map(?array $data): ?self
     {
         if ($data === null) {
