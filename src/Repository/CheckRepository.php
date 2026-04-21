@@ -17,13 +17,19 @@ final class CheckRepository
     /**
      * @return Check[]
      */
-    public function getAll(bool $filterEnabled = true): array
+    public function getAll(bool $filterEnabled = true, bool $filterPublished = true): array
     {
         $result = $this->updownio->getAsArrayOf('checks', Check::class);
 
         if ($filterEnabled) {
             $result = array_filter($result, function (Check $check) {
                 return $check->enabled;
+            });
+        }
+
+        if ($filterPublished) {
+            $result = array_filter($result, function (Check $check) {
+                return $check->published;
             });
         }
 
