@@ -14,15 +14,7 @@
     <tbody>
     <tr n:foreach="$checks as $check">
         <td>
-            {if $check->isDegraded()}
-                <span class="badge text-bg-warning">Degraded</span>
-            {elseif $check->isRecovering()}
-                <span class="badge text-bg-info">Recovering</span>
-            {elseif $check->down}
-                <span class="badge text-bg-danger">Down</span>
-            {else}
-                <span class="badge text-bg-success">Up</span>
-            {/if}
+            {embed 'StatusIndicator.latte', check: $check}{/embed}
         </td>
         <th>
             {if $check->alias !== null}
