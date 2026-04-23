@@ -4,5 +4,7 @@
 {var $title = 'Checks'}
 
 {block main}
-    {embed '../Components/ChecksTable.latte', checks: $checks}{/embed}
+    <div class="overflow-scroll">
+        {embed '../Components/ChecksTable.latte', checks: $checks}{/embed}
+    </div>
 {/block}
