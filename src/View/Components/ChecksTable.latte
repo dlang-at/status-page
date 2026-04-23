@@ -1,0 +1,71 @@
+{parameters DlangAT\StatusPage\Model\Check[] $checks}
+<table class="table table-hover table-sm table-striped">
+    <thead>
+    <tr>
+        <th>Status</th>
+        <th>Alias/URL</th>
+        <th class="text-end">Uptime (one month)</th>
+        <th>Last status change</th>
+        <th>TLS certificate expiry</th>
+        <th>Domain registration expiry</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr n:foreach="$checks as $check">
+        <td>
+            {if $check->isDegraded()}
+                <span class="badge text-bg-warning">Degraded</span>
+            {elseif $check->isRecovering()}
+                <span class="badge text-bg-info">Recovering</span>
+            {elseif $check->down}
+                <span class="badge text-bg-danger">Down</span>
+            {else}
+                <span class="badge text-bg-success">Up</span>
+            {/if}
+        </td>
+        <th>
+            {if $check->alias !== null}
+                {$check->alias}
+            {else}
+                {$check->url}
+            {/if}
+        </th>
+        <td class="text-end">
+            {$check->uptime | formatUptime} %
+        </td>
+        <td>
+            {if $check->downSince !== null}
+                {$check->downSince | formatDateTime}
+            {/if}
+            {if $check->upSince !== null}
+                {$check->upSince | formatDateTime}
+            {/if}
+        </td>
+        <td>
+            {if $check->ssl === null}
+                <i>n/a</i>
+            {else}
+                {if $check->ssl->expiresAt === null}
+                    <i>n/a</i>
+                {else}
+                    {$check->ssl->expiresAt | formatDateTime}
+                {/if}
+            {/if}
+        </td>
+        <td>
+            {if $check->domain === null}
+                <i>n/a</i>
+            {else}
+                {if $check->domain->expiresAt !== null}
+                    {$check->domain->expiresAt | formatDateTime}
+                {else}
+                    <i>n/a</i>
+                {/if}
+            {/if}
+        </td>
+        <td>
+            <a class="btn btn-outline-primary" href="{$check->getSubPageLink()}">Details</a>
+        </td>
+    </tr>
+    </tbody>
+</table>

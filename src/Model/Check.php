@@ -50,6 +50,11 @@ final class Check
         return (!$this->down && ($this->upSince !== null));
     }
 
+    public function getSubPageLink(): string
+    {
+        return '/checks/' . $this->token;
+    }
+
     static function map(?array $data): ?self
     {
         if ($data === null) {

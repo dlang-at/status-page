@@ -15,6 +15,7 @@ final class Router
         $app->addRoutingMiddleware();
 
         $app->redirect('/', '/dashboard', 301);
+        $app->get('/checks', [ChecksController::class, 'index']);
         $app->get('/dashboard', [RootController::class, 'dashboard']);
         $app->get('/legal', [RootController::class, 'legal']);
 

@@ -1,0 +1,8 @@
+{extends '../Layout/Base.latte'}
+{parameters DlangAT\StatusPage\Model\Check[] $checks}
+{var $navGroup = 'checks'}
+{var $title = 'Checks'}
+
+{block main}
+    {embed '../Components/ChecksTable.latte', checks: $checks}{/embed}
+{/block}
