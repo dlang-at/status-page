@@ -55,6 +55,11 @@ final class Check
         return '/checks/' . $this->token;
     }
 
+    public function getTitle(): string
+    {
+        return $this->alias ?? $this->url;
+    }
+
     static function map(?array $data): ?self
     {
         if ($data === null) {

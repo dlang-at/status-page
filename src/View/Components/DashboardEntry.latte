@@ -5,11 +5,7 @@
             <div class="card-body">
                 {embed 'StatusIndicator.latte', check: $check}{/embed}
                 <h3 class="card-title">
-                    {if $check->alias !== null}
-                        {$check->alias}
-                    {else}
-                        {$check->url}
-                    {/if}
+                    {$check->getTitle()}
                 </h3>
             </div>
         </a>

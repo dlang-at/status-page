@@ -17,11 +17,7 @@
             {embed 'StatusIndicator.latte', check: $check}{/embed}
         </td>
         <th>
-            {if $check->alias !== null}
-                {$check->alias}
-            {else}
-                {$check->url}
-            {/if}
+            {$check->getTitle()}
         </th>
         <td class="text-end">
             {$check->uptime | formatUptime} %
