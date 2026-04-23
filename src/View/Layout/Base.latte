@@ -9,7 +9,7 @@
 </main>
 <footer class="bg-dark text-bg-dark">
     <div class="container-xxl">
-        <p>Server time: <code class="text-light">{date(DateTimeInterface::ATOM)}</code></p>
+        <p>Server time: {(new \DateTimeImmutable()) | formatDateTime}</p>
     </div>
 </footer>
 {include 'Nav.latte'}
