@@ -19,7 +19,7 @@ final class RootController extends ControllerBase
 
         $downCount = 0;
         foreach ($checks as $check) {
-            if ($check->down) {
+            if (!$check->isUpConfirmed()) {
                 ++$downCount;
             }
         }

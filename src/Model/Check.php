@@ -66,7 +66,7 @@ final class Check
             DateTimeFactory::makeOrNull($data['down_since']),
             DateTimeFactory::makeOrNull($data['up_since']),
             $data['period'],
-            $data['stringMatch'],
+            $data['string_match'],
             $data['enabled'],
             $data['published'],
             $data['recipients'],
@@ -74,11 +74,11 @@ final class Check
             DateTimeFactory::makeOrNull($data['next_check_at']),
             DateTimeFactory::makeOrNull($data['created_at']),
             $data['mute_until'],
-            $data['custom_headers'],
-            $data['http_verb'],
-            $data['http_body'],
+            $data['custom_headers'] ?? null,
+            $data['http_verb'] ?? null,
+            $data['http_body'] ?? null,
             Ssl::map($data['ssl']),
-            Domain::map($data['domain']),
+            (isset($data['domain'])) ? Domain::map($data['domain']) : null,
         );
 
         return $result;
