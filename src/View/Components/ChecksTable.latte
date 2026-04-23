@@ -57,7 +57,10 @@
             {/if}
         </td>
         <td>
-            <a class="btn btn-outline-primary" href="{$check->getSubPageLink()}">Details</a>
+            <div class="btn-group" role="group">
+                <a class="btn btn-outline-secondary" href="{$check->url}">Visit</a>
+                <a class="btn btn-primary" href="{$check->getSubPageLink()}">Details</a>
+            </div>
         </td>
     </tr>
     </tbody>
