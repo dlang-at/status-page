@@ -3,7 +3,7 @@
     <h2 class="d-none">Services</h2>
     <section>
         <h3 class="d-none">Alerts</h3>
-        <div class="container-fluid g-0">
+        <div class="container g-0">
             <ul class="row list-unstyled g-2">
                 {foreach $checks as $check}
                     {if !$check->isUpConfirmed()}
@@ -15,7 +15,7 @@
     </section>
     <section>
         <h3 class="d-none">Up</h3>
-        <div class="container-fluid g-0">
+        <div class="container g-0">
             <ul class="row list-unstyled g-2">
                 {foreach $checks as $check}
                     {if $check->isUpConfirmed()}

@@ -4,7 +4,7 @@
         <a href="/checks/{$check->token}" class="text-reset text-decoration-none">
             <div class="card-body">
                 {embed 'StatusIndicator.latte', check: $check}{/embed}
-                <h3 class="card-title">
+                <h3 class="card-title fs-6">
                     {$check->getTitle()}
                 </h3>
             </div>

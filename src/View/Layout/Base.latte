@@ -2,17 +2,21 @@
 <!DOCTYPE html>
 <html lang="en">
 {include 'Head.latte'}
-<body>
-<main class="container-xxl py-2 py-md-4">
-    <h1>{$title}</h1>
+<body class="d-flex flex-column min-vh-100 justify-content-start">
+{include 'Nav.latte'}
+<header class="bg-primary text-light shadow py-2 py-md-3 mb-2 mb-md-4">
+    <div class="container-xxl">
+        <h1>{$title}</h1>
+    </div>
+</header>
+<main class="container-xxl pb-4">
     {block main}{/block}
 </main>
-<footer class="bg-dark text-bg-dark">
+<footer class="bg-dark text-bg-dark py-2 mt-auto">
     <div class="container-xxl">
-        <p>Server time: {(new \DateTimeImmutable()) | formatDateTime}</p>
+        Server time: {(new \DateTimeImmutable()) | formatDateTime}
     </div>
 </footer>
-{include 'Nav.latte'}
 <script src="/assets/bootstrap.min.js"></script>
 </body>
 </html>
