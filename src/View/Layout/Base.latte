@@ -12,11 +12,7 @@
 <main class="container-xxl pb-4">
     {block main}{/block}
 </main>
-<footer class="bg-dark text-bg-dark mt-auto">
-    <div class="container-xxl d-flex align-items-center justify-content-end">
-        <div class="py-2">Access time: {(new \DateTimeImmutable()) | formatDateTime}</div>
-    </div>
-</footer>
+{include 'Footer.latte'}
 <script src="/assets/bootstrap.min.js"></script>
 </body>
 </html>
