@@ -27,7 +27,7 @@ final class TemplateEngine
         );
 
         $this->latte->addFilter('formatUptime', function (float $uptime): string {
-            return number_format($uptime, 2, '.');
+            return number_format($uptime, 2, '.') . ' %';
         });
     }
 
