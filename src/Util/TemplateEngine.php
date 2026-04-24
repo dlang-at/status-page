@@ -20,6 +20,17 @@ final class TemplateEngine
     private function setupFilters()
     {
         $this->latte->addFilter(
+            'formatCheckInterval',
+            function (int $seconds): string {
+                if ($seconds >= 3600) {
+                    return round($seconds / 3600, 2) . ' h';
+                }
+
+                return intval($seconds / 60) . ' min';
+            }
+        );
+
+        $this->latte->addFilter(
             'formatDateTime',
             function (DateTimeInterface $dateTime): string {
                 return $dateTime->format($this->dateTimeFormat);

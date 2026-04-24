@@ -5,7 +5,7 @@
         <th>Status</th>
         <th>Alias/URL</th>
         <th class="text-end">Uptime (one month)</th>
-        <th>Check interval</th>
+        <th class="text-end">Check interval</th>
         <th>Last status change</th>
         <th>TLS certificate expiry</th>
         <th>Domain registration expiry</th>
@@ -23,12 +23,8 @@
         <td class="text-end">
             {$check->uptime | formatUptime}
         </td>
-        <td>
-            {if $check->period >= 3600}
-                {$check->period / 3600} h
-            {else}
-                {$check->period / 60} min
-            {/if}
+        <td class="text-end">
+            {$check->period | formatCheckInterval}
         </td>
         <td>
             {if $check->downSince !== null}
