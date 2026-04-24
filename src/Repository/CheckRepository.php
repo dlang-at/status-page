@@ -35,4 +35,20 @@ final class CheckRepository
 
         return $result;
     }
+
+    public function getByToken(string $token, bool $filterEnabled = true, bool $filterPublished = true): ?Check
+    {
+        /** @var ?Check $result */
+        $result = $this->updownio->getAs('checks/' . urlencode($token), Check::class);
+
+        if ($filterEnabled && !$result->enabled) {
+            return null;
+        }
+
+        if ($filterPublished && !$result->published) {
+            return null;
+        }
+
+        return $result;
+    }
 }

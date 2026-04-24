@@ -16,6 +16,7 @@ final class Router
 
         $app->redirect('/', '/dashboard', 301);
         $app->get('/checks', [ChecksController::class, 'index']);
+        $app->get('/checks/{token}', [ChecksController::class, 'byToken']);
         $app->get('/dashboard', [RootController::class, 'dashboard']);
         $app->get('/legal', [RootController::class, 'legal']);
 
