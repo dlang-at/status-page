@@ -1,0 +1,8 @@
+{parameters float $value}
+{var $level = ($value >= 100) ? 'success' : (($value >= 99.9) ? 'warning' : (($value >= 50) ? 'danger' : 'dark'))}
+<div title="Uptime (one month)">
+    <span class="badge badge bg-body-secondary text-body-secondary fw-normal">{$value | formatUptime}</span>
+    <svg width="1em" height="1em" class={["text-$level"]}>
+        <circle r="0.5em" cx="0.5em" cy="0.5em" fill="var(--bs-{$level})"/>
+    </svg>
+</div>

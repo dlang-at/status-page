@@ -2,8 +2,11 @@
 <li class="dashboard-entry col-12 col-md-6 col-xl-4 col-xxl-3">
     <div class="card w-100 h-100">
         <a href="/checks/{$check->token}" class="text-reset text-decoration-none">
-            <div class="card-body">
+            <div n:block="|strip" class="card-header d-flex justify-content-between align-items-baseline">
                 {embed 'StatusIndicator.latte', check: $check}{/embed}
+                {embed 'UptimeIndicator.latte', value: $check->uptime}{/embed}
+            </div>
+            <div class="card-body">
                 <h3 class="card-title fs-6">
                     {$check->getTitle()}
                 </h3>

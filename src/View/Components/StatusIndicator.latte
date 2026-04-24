@@ -1,6 +1,6 @@
 {parameters DlangAT\StatusPage\Model\Check $check}
 
-<div class="status-indicator">
+<div class="status-indicator" title="Status">
     {if $check->isDegraded()}
         <span class="badge text-bg-warning p-2">Degraded</span>
     {elseif $check->isRecovering()}
