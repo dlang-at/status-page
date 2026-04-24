@@ -1,0 +1,27 @@
+{layout 'Section.latte'}
+{parameters DlangAT\StatusPage\Model\Check $check}
+
+{var $enabled = ($check->ssl !== null)}
+
+{block section-heading}TLS certificate{/block}
+
+{block section-content}
+    {embed 'Detail.latte'}
+        {block head}Validity{/block}
+        {block body}{$check->ssl->valid ? 'valid' : 'invalid'}{/block}
+    {/embed}
+    {if $check->ssl->error !== null}
+        {embed 'Detail.latte'}
+            {block head}Error{/block}
+            {block body}{$check->ssl->error}{/block}
+        {/embed}
+    {/if}
+    {embed 'Detail.latte'}
+        {block head}Expiration date{/block}
+        {block body}{$check->ssl->expiresAt | formatDateTime}{/block}
+    {/embed}
+    {embed 'Detail.latte'}
+        {block head}Last check{/block}
+        {block body}{$check->ssl->testedAt | formatDateTime}{/block}
+    {/embed}
+{/block}

@@ -1,0 +1,21 @@
+{layout 'Section.latte'}
+{parameters DlangAT\StatusPage\Model\Check $check}
+
+{var $enabled = ($check->domain !== null)}
+
+{block section-heading}Domain{/block}
+
+{block section-content}
+    {embed 'Detail.latte'}
+        {block head}Source{/block}
+        {block body}{$check->domain->source}{/block}
+    {/embed}
+    {embed 'Detail.latte'}
+        {block head}Expiration date{/block}
+        {block body}{$check->domain->expiresAt | formatDateTime}{/block}
+    {/embed}
+    {embed 'Detail.latte'}
+        {block head}Last check{/block}
+        {block body}{$check->domain->testedAt | formatDateTime}{/block}
+    {/embed}
+{/block}

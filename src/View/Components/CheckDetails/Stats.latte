@@ -1,0 +1,24 @@
+{layout 'Section.latte'}
+{parameters DlangAT\StatusPage\Model\Check $check}
+
+{var $enabled = true}
+
+{block section-heading}Stats{/block}
+
+{block section-content}
+    {embed 'Detail.latte'}
+        {block head}Last check{/block}
+        {block body}{$check->lastCheckAt | formatDateTime}{/block}
+    {/embed}
+    {embed 'Detail.latte'}
+        {block head}Last status change{/block}
+        {block body}
+            {if $check->upSince !== null}
+                {$check->upSince | formatDateTime}
+            {/if}
+            {if $check->downSince !== null}
+                {$check->downSince | formatDateTime}
+            {/if}
+        {/block}
+    {/embed}
+{/block}
