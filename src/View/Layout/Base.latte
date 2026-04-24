@@ -12,9 +12,9 @@
 <main class="container-xxl pb-4">
     {block main}{/block}
 </main>
-<footer class="bg-dark text-bg-dark py-2 mt-auto">
-    <div class="container-xxl">
-        Server time: {(new \DateTimeImmutable()) | formatDateTime}
+<footer class="bg-dark text-bg-dark mt-auto">
+    <div class="container-xxl d-flex align-items-center justify-content-end">
+        <div class="py-2">Access time: {(new \DateTimeImmutable()) | formatDateTime}</div>
     </div>
 </footer>
 <script src="/assets/bootstrap.min.js"></script>

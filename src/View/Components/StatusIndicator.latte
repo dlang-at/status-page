@@ -2,12 +2,12 @@
 
 <div class="status-indicator">
     {if $check->isDegraded()}
-        <span class="badge text-bg-warning">Degraded</span>
+        <span class="badge text-bg-warning p-2">Degraded</span>
     {elseif $check->isRecovering()}
-        <span class="badge text-bg-info">Recovering</span>
+        <span class="badge text-bg-info p-2">Recovering</span>
     {elseif $check->down}
-        <span class="badge text-bg-danger">Down</span>
+        <span class="badge text-bg-danger p-2">Down</span>
     {else}
-        <span class="badge text-bg-success">Up</span>
+        <span class="badge text-bg-success p-2">Up</span>
     {/if}
 </div>
