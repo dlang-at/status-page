@@ -1,5 +1,5 @@
 {parameters $navGroup}
-<nav class="navbar navbar-expand-lg sticky-top bg-body-tertiary border-bottom shadow-sm">
+<nav class="navbar navbar-expand-lg sticky-top bg-body-tertiary shadow-sm m-0 p-0">
     <div class="container-xxl">
         <a class="navbar-brand" href="/">
             <img class="d-inline-block align-text-top me-1" width="24" height="24" src="/assets/icon.svg" alt="Icon"/>
@@ -9,15 +9,15 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-            <ul class="navbar-nav">
+            <ul class="navbar-nav nav-underline">
                 <li class="nav-item">
-                    <a class={[nav-link, active => ($navGroup === 'dashboard')]} href="/dashboard">Dashboard</a>
+                    <a class={[nav-link, 'p-3', active => ($navGroup === 'dashboard')]} href="/dashboard">Dashboard</a>
                 </li>
                 <li class="nav-item">
-                    <a class={[nav-link, active => ($navGroup === 'checks')]} href="/checks">Checks</a>
+                    <a class={[nav-link, 'p-3', active => ($navGroup === 'checks')]} href="/checks">Checks</a>
                 </li>
                 <li class="nav-item">
-                    <a class={[nav-link, active => ($navGroup === 'legal')]} href="/legal">{$_ENV['PAGE_LEGAL_LABEL']}</a>
+                    <a class={[nav-link, 'p-3', active => ($navGroup === 'legal')]} href="/legal">{$_ENV['PAGE_LEGAL_LABEL']}</a>
                 </li>
             </ul>
         </div>

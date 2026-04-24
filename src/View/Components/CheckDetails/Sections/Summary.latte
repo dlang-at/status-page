@@ -14,8 +14,8 @@
                 {embed '../../StatusIndicator.latte', check: $check}{/embed}
             </div>
             {if $check->error !== null}
-                <h4 class="fs-6 fw-normal">Error details</h4>
-                {$check->error}
+                <h4 class="fs-6 fw-normal mt-3">Error details</h4>
+                <blockquote class="blockquote">{$check->error}</blockquote>
             {/if}
         {/block}
     {/embed}
