@@ -1,4 +1,4 @@
-{layout 'Section.latte'}
+{layout '../Section.latte'}
 {parameters DlangAT\StatusPage\Model\Check $check}
 
 {var $enabled = true}
@@ -7,19 +7,19 @@
 {block section-heading}Summary{/block}
 
 {block section-content}
-    {embed 'Detail.latte'}
+    {embed '../Detail.latte'}
         {block head}Status{/block}
         {block body}
             <div class="fs-1">
-                {embed '../StatusIndicator.latte', check: $check}{/embed}
+                {embed '../../StatusIndicator.latte', check: $check}{/embed}
             </div>
         {/block}
     {/embed}
-    {embed 'Detail.latte'}
+    {embed '../Detail.latte'}
         {block head}Uptime (one month){/block}
         {block body}<span class="fs-2">{$check->uptime | formatUptime}</span>{/block}
     {/embed}
-    {embed 'Detail.latte'}
+    {embed '../Detail.latte'}
         {block head}Check interval{/block}
         {block body}<span class="fs-2">{$check->period | formatCheckInterval}</span>{/block}
     {/embed}

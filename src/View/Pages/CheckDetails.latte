@@ -4,8 +4,8 @@
 {var $title = $check->getTitle()}
 
 {block main}
-    {embed '../Components/CheckDetails/Summary.latte', check: $check}{/embed}
-    {embed '../Components/CheckDetails/Stats.latte', check: $check}{/embed}
-    {embed '../Components/CheckDetails/TLS.latte', check: $check}{/embed}
-    {embed '../Components/CheckDetails/Domain.latte', check: $check}{/embed}
+    {embed '../Components/CheckDetails/Sections/Summary.latte', check: $check}{/embed}
+    {embed '../Components/CheckDetails/Sections/Stats.latte', check: $check}{/embed}
+    {embed '../Components/CheckDetails/Sections/TLS.latte', check: $check}{/embed}
+    {embed '../Components/CheckDetails/Sections/Domain.latte', check: $check}{/embed}
 {/block}
