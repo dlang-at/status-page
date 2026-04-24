@@ -1,11 +1,14 @@
 {extends '../Layout/Base.latte'}
-{parameters DlangAT\StatusPage\Model\Check $check}
+{parameters
+    DlangAT\StatusPage\Model\Check $check,
+    DlangAT\StatusPage\Model\Metrics $metrics,
+}
 {var $navGroup = 'checks'}
 {var $title = $check->getTitle()}
 
 {block main}
     {embed '../Components/CheckDetails/Sections/Summary.latte', check: $check}{/embed}
-    {embed '../Components/CheckDetails/Sections/Stats.latte', check: $check}{/embed}
+    {embed '../Components/CheckDetails/Sections/Stats.latte', check: $check, metrics: $metrics}{/embed}
     {embed '../Components/CheckDetails/Sections/Http.latte', check: $check}{/embed}
     {embed '../Components/CheckDetails/Sections/TLS.latte', check: $check}{/embed}
     {embed '../Components/CheckDetails/Sections/Domain.latte', check: $check}{/embed}

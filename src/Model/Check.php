@@ -53,7 +53,7 @@ final class Check
 
     public function getSubPageLink(): string
     {
-        return '/checks/' . $this->token;
+        return '/checks/' . urlencode($this->token);
     }
 
     public function getTitle(): string

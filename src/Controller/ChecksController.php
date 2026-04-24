@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace DlangAT\StatusPage\Controller;
 
 use DlangAT\StatusPage\Repository\CheckRepository;
+use DlangAT\StatusPage\Repository\MetricsRepository;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
@@ -15,14 +16,18 @@ final class ChecksController extends ControllerBase
         Response $response,
         string $token,
         CheckRepository $checkRepository,
+        MetricsRepository$metricsRepository,
     ): Response {
         $check = $checkRepository->getByToken($token);
         if ($check === null) {
             return $response->withStatus(404);
         }
 
+        $metrics = $metricsRepository->getByCheck($token);
+
         return $this->templateEngine->render($response, 'Pages/CheckDetails.latte', [
             'check' => $check,
+            'metrics' => $metrics,
         ]);
     }
 

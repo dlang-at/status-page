@@ -1,5 +1,8 @@
 {layout '../Section.latte'}
-{parameters DlangAT\StatusPage\Model\Check $check}
+{parameters
+    DlangAT\StatusPage\Model\Check $check,
+    DlangAT\StatusPage\Model\Metrics $metrics,
+}
 
 {var $enabled = true}
 
@@ -7,8 +10,18 @@
 
 {block section-content}
     {embed '../Detail.latte'}
-        {block head}Last check{/block}
-        {block body}{$check->lastCheckAt | formatDateTime}{/block}
+        {block head}
+            Apdex (one month)
+            <sup n:block="|strip"><a
+                        class="link-underline-info"
+                        href="https://updown.io/faq/what-is-apdex"
+                        rel="noopener noreferrer"
+                        target="_blank"
+                >&#x2139; What is Apdex?</a></sup>
+        {/block}
+        {block body}
+            {$metrics->apdex | number:2}
+        {/block}
     {/embed}
     {embed '../Detail.latte'}
         {block head}Last status change{/block}
@@ -20,5 +33,9 @@
                 {$check->downSince | formatDateTime}
             {/if}
         {/block}
+    {/embed}
+    {embed '../Detail.latte'}
+        {block head}Last check{/block}
+        {block body}{$check->lastCheckAt | formatDateTime}{/block}
     {/embed}
 {/block}
