@@ -1,0 +1,17 @@
+{layout '../Section.latte'}
+{parameters DlangAT\StatusPage\Model\Check $check}
+
+{block section-heading}Links{/block}
+
+{block section-content}
+    {embed '../Detail.latte'}
+        {block head}Source{/block}
+        {block body}
+            {embed
+                '../ExtLink.latte',
+                url: 'https://updown.io/' . urlencode($check->token),
+                noReferrer: $_ENV['APP_ENV'] === 'dev',
+            }{/embed}
+        {/block}
+    {/embed}
+{/block}

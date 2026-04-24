@@ -1,0 +1,25 @@
+{layout '../Section.latte'}
+{parameters DlangAT\StatusPage\Model\Check $check}
+
+{var $enabled = ($check->httpVerb !== null)}
+
+{block section-heading}HTTP{/block}
+
+{block section-content}
+    {embed '../Detail.latte'}
+        {block head}Verb{/block}
+        {block body}{$check->httpVerb}{/block}
+    {/embed}
+    {embed '../Detail.latte'}
+        {block head}URL{/block}
+        {block body}
+            {embed '../ExtLink.latte', url: $check->url}{/embed}
+        {/block}
+    {/embed}
+    {if !empty($check->stringMatch)}
+        {embed '../Detail.latte'}
+            {block head}Match string{/block}
+            {block body}{$check->stringMatch}{/block}
+        {/embed}
+    {/if}
+{/block}

@@ -1,0 +1,9 @@
+{parameters string $url, bool $noReferrer = true}
+{embed
+    '../Link.latte',
+    href: $url,
+    rel: [ 'nofollow', 'noopener', 'noreferrer' => $noReferrer],
+    target: '_blank'
+}
+    {block text}{$url}{/block}
+{/embed}

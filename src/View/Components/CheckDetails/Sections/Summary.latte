@@ -13,6 +13,10 @@
             <div class="fs-1">
                 {embed '../../StatusIndicator.latte', check: $check}{/embed}
             </div>
+            {if $check->error !== null}
+                <h4 class="fs-6 fw-normal">Error details</h4>
+                {$check->error}
+            {/if}
         {/block}
     {/embed}
     {embed '../Detail.latte'}
