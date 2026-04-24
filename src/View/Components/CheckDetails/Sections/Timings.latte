@@ -1,0 +1,15 @@
+{layout '../Section.latte'}
+{parameters DlangAT\StatusPage\Model\Timings $timings}
+
+{block section-heading}Average timings{/block}
+
+{block section-content}
+    {if $timings->redirect > 0}
+        {embed '../TimingDetail.latte', title: 'Redirect', value: $timings->redirect}{/embed}
+    {/if}
+    {embed '../TimingDetail.latte', title: 'Namelookup', value: $timings->namelookup}{/embed}
+    {embed '../TimingDetail.latte', title: 'Connection', value: $timings->connection}{/embed}
+    {embed '../TimingDetail.latte', title: 'Handshake', value: $timings->handshake}{/embed}
+    {embed '../TimingDetail.latte', title: 'Response', value: $timings->response}{/embed}
+    {embed '../TimingDetail.latte', title: 'Total (avg)', value: $timings->total}{/embed}
+{/block}
