@@ -67,7 +67,7 @@
     --bs-black-rgb: 0, 0, 0;
     --bs-font-sans-serif: "Roboto", sans-serif;
     --bs-font-serif: "Roboto Slab", serif;
-    --bs-font-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    --bs-font-monospace: "Roboto Mono", monospace;
     --bs-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0));
     --bs-body-font-family: var(--bs-font-serif);
     --bs-body-font-size: 1rem;
