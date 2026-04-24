@@ -1,0 +1,24 @@
+{extends '../../Layout/Base.latte'}
+{parameters
+    Slim\Exception\HttpNotFoundException $exception = null,
+    Psr\Http\Message\ServerRequestInterface $request = null,
+}
+{var $navGroup = 'error'}
+{var $title = 'Not Found'}
+
+{block main}
+    <p>The requested page could not be found.</p>
+
+    {if $request !== null}
+        <hr>
+        <p>
+            Request Method: <code>{$request->getMethod()}</code><br>
+            Request URI: <code>{$request->getUri()}</code><br>
+        </p>
+    {/if}
+
+    <div n:if="$exception !== null">
+        <hr>
+        <pre>{(string)$exception}</pre>
+    </div>
+{/block}

@@ -7,9 +7,11 @@ namespace DlangAT\StatusPage;
 use DI\ContainerBuilder;
 use DlangAT\StatusPage\Util\TemplateEngine;
 use Dotenv\Dotenv;
+use GuzzleHttp\Psr7\HttpFactory;
 use Latte\Engine as LatteEngine;
 use Latte\Loaders\FileLoader as LatteFileLoader;
 use Psr\Container\ContainerInterface as Container;
+use Psr\Http\Message\ResponseFactoryInterface;
 
 final class DI
 {
@@ -59,6 +61,8 @@ final class DI
 
             'path.tmp' => $paths['tmp'],
             'path.var' => $paths['var'],
+
+            ResponseFactoryInterface::class => \DI\get(HttpFactory::class),
 
             TemplateEngine::class => function (Container $container, LatteEngine $engine) {
                 return new TemplateEngine($engine, $container->get('format.datetime'));
