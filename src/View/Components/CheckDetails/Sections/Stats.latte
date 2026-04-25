@@ -21,6 +21,7 @@
         {/block}
         {block body}
             {$metrics->apdex | number:2}
+            <small class="fs-6 fw-normal">T={$check->apdexT | number:2}</small>
         {/block}
     {/embed}
     {embed '../Detail.latte'}
