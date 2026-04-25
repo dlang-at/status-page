@@ -6,6 +6,7 @@ namespace DlangAT\StatusPage\Util;
 
 use DomainException;
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\GuzzleException;
 
 class UpdownioApiClient
 {
@@ -25,6 +26,9 @@ class UpdownioApiClient
         ]);
     }
 
+    /**
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
     public function get(string $resource, ?array $query = null): string
     {
         $response = $this->client->get($resource, ['query' => $query]);
@@ -41,9 +45,21 @@ class UpdownioApiClient
         return $mapper($item);
     }
 
-    public function getAs(string $resource, string $as, ?array $query = null): object
+    /**
+     * @template T = $as
+     * @return ?T
+     */
+    public function getAs(string $resource, string $as, ?array $query = null): ?object
     {
-        $raw = $this->get($resource, $query);
+        try {
+            $raw = $this->get($resource, $query);
+        } catch (GuzzleException $ex) {
+            if ($ex->getCode() === 404) {
+                return null;
+            }
+            throw $ex;
+        }
+
         $json = json_decode($raw, true, JSON_THROW_ON_ERROR);
         return $this->map($json, $as);
     }

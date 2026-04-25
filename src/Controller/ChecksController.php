@@ -8,6 +8,7 @@ use DlangAT\StatusPage\Repository\CheckRepository;
 use DlangAT\StatusPage\Repository\MetricsRepository;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
+use Slim\Exception\HttpNotFoundException;
 
 final class ChecksController extends ControllerBase
 {
@@ -16,11 +17,11 @@ final class ChecksController extends ControllerBase
         Response $response,
         string $token,
         CheckRepository $checkRepository,
-        MetricsRepository$metricsRepository,
+        MetricsRepository $metricsRepository,
     ): Response {
         $check = $checkRepository->getByToken($token);
         if ($check === null) {
-            return $response->withStatus(404);
+            throw new HttpNotFoundException($request);
         }
 
         $metrics = $metricsRepository->getByCheck($token);
