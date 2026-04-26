@@ -127,7 +127,7 @@
     --bs-btn-hover-color: #fff;
     --bs-btn-hover-bg: #922f29;
     --bs-btn-hover-border-color: #882c26;
-    --bs-btn-focus-shadow-rgb: 49,132,253;
+    --bs-btn-focus-shadow-rgb: 49, 132, 253;
     --bs-btn-active-color: #fff;
     --bs-btn-active-bg: #882c26;
     --bs-btn-active-border-color: #7e2923;
@@ -151,6 +151,12 @@
     --bs-btn-disabled-color: #b03931;
     --bs-btn-disabled-bg: transparent;
     --bs-btn-disabled-border-color: #b03931;
+}
+
+.dropdown-menu {
+    --bs-dropdown-link-active-bg: #b03931;
+    --bs-dropdown-link-hover-bg: #922f29;
+    --bs-dropdown-link-hover-color: #fff;
 }
 
 .pagination {
