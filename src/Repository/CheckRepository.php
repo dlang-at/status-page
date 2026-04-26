@@ -38,6 +38,10 @@ final class CheckRepository
 
     public function getByToken(string $token, bool $filterEnabled = true, bool $filterPublished = true): ?Check
     {
+        if (!ctype_alnum($token) || (strlen($token) > 8)) {
+            return null;
+        }
+
         /** @var ?Check $result */
         $result = $this->updownio->getAs('checks/' . urlencode($token), Check::class);
 
