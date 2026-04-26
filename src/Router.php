@@ -7,6 +7,7 @@ namespace DlangAT\StatusPage;
 use DlangAT\StatusPage\Controller\ChecksController;
 use DlangAT\StatusPage\Controller\ErrorPageController;
 use DlangAT\StatusPage\Controller\RootController;
+use DlangAT\StatusPage\Middleware\DefaultHeaderMiddleware;
 use Slim\App;
 use Slim\Exception\HttpNotFoundException;
 
@@ -15,6 +16,8 @@ final class Router
     public static function install(App $app)
     {
         $app->addRoutingMiddleware();
+
+        $app->addMiddleware(new DefaultHeaderMiddleware('Cache-Control', 'max-age=60'));
 
         $app->redirect('/', '/dashboard', 301);
         $app->get('/checks', [ChecksController::class, 'index']);

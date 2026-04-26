@@ -34,6 +34,6 @@ final class RootController extends ControllerBase
     {
         return $this->templateEngine->render($response, 'Pages/Legal.latte', [
             'legalPageText' => $_ENV['PAGE_LEGAL_TEXT'],
-        ]);
+        ])->withHeader('Cache-Control', 'max-age=86400');
     }
 }
