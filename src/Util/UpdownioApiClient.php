@@ -56,7 +56,7 @@ final class UpdownioApiClient
      * @return ?T
      * @throws GuzzleException
      */
-    public function getAs(string $resource, string $as, ?array $query = null): ?object
+    public function getAs(string $resource, string $as, ?array $query = null)
     {
         try {
             $raw = $this->get($resource, $query);
