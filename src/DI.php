@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace DlangAT\StatusPage;
 
 use DI\ContainerBuilder;
+use DlangAT\StatusPage\Repository\DashboardRepository;
 use DlangAT\StatusPage\Util\TemplateEngine;
 use Dotenv\Dotenv;
 use GuzzleHttp\Psr7\HttpFactory;
@@ -25,6 +26,10 @@ final class DI
     private function makeDefinitions(Dotenv $dotenv, array $paths): array
     {
         return [
+            DashboardRepository::class => function (Container $container) {
+                return new DashboardRepository($container->get('path.var') . '/dashboards.ini');
+            },
+
             DI::class => $this,
 
             Dotenv::class => $dotenv,
