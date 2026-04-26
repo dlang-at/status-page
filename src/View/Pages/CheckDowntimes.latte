@@ -17,7 +17,10 @@
 
     <section>
         <h2 class="visually-hidden">Downtimes list</h2>
-        <div class="table-responsive">
+        <div n:if="count($downtimes) === 0" class="mt-5">
+            <em>No downtimes recorded.</em>
+        </div>
+        <div n:else class="table-responsive">
             {embed '../Components/DowntimesTable.latte', downtimes: $downtimes}{/embed}
         </div>
     </section>

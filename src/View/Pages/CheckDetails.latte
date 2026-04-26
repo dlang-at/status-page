@@ -2,6 +2,8 @@
 {parameters
     DlangAT\StatusPage\Model\Check $check,
     DlangAT\StatusPage\Model\Metrics $metrics,
+    DlangAT\StatusPage\Model\Downtime[] $downtimes,
+    bool $downtimesAreCutOff,
 }
 {var $navGroup = 'checks'}
 {var $title = $check->getTitle()}
@@ -14,4 +16,10 @@
     {embed '../Components/CheckDetails/Sections/TLS.latte', check: $check}{/embed}
     {embed '../Components/CheckDetails/Sections/Domain.latte', check: $check}{/embed}
     {embed '../Components/CheckDetails/Sections/Links.latte', check: $check}{/embed}
+    {embed
+        '../Components/CheckDetails/Sections/Downtimes.latte',
+        check: $check,
+        downtimes: $downtimes,
+        downtimesAreCutOff: $downtimesAreCutOff,
+    }{/embed}
 {/block}

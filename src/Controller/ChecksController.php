@@ -18,6 +18,7 @@ final class ChecksController extends ControllerBase
         Response $response,
         string $token,
         CheckRepository $checkRepository,
+        DowntimeRepository $downtimeRepository,
         MetricsRepository $metricsRepository,
     ): Response {
         $check = $checkRepository->getByToken($token);
@@ -25,10 +26,15 @@ final class ChecksController extends ControllerBase
             throw new HttpNotFoundException($request);
         }
 
+        $downtimesAll = $downtimeRepository->getByCheck($token);
+        $downtimesCountAll = count($downtimesAll);
+        $downtimes = array_slice($downtimesAll, 0, 10);
         $metrics = $metricsRepository->getByCheck($token);
 
         return $this->templateEngine->render($response, 'Pages/CheckDetails.latte', [
             'check' => $check,
+            'downtimes' => $downtimes,
+            'downtimesAreCutOff' => ($downtimesCountAll > 10),
             'metrics' => $metrics,
         ]);
     }

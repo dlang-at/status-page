@@ -1,0 +1,25 @@
+{layout '../Section.latte'}
+{parameters
+    DlangAT\StatusPage\Model\Check $check,
+    DlangAT\StatusPage\Model\Downtime[] $downtimes,
+    bool $downtimesAreCutOff,
+}
+
+{block section-heading}Downtimes{/block}
+
+{block section-content}
+    <div class="col-12">
+        <div n:if="count($downtimes) === 0">
+            <em>No downtimes recorded.</em>
+        </div>
+        <div n:else class="table-responsive">
+            {embed '../../DowntimesTable.latte', downtimes: $downtimes}{/embed}
+        </div>
+
+        <div class="d-flex justify-content-end">
+            <a n:if="$downtimesAreCutOff" class="btn btn-primary" href="{$check->getSubPageLink()}/downtimes">
+                View more
+            </a>
+        </div>
+    </div>
+{/block}
