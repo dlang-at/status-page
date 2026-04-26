@@ -8,7 +8,7 @@ use DomainException;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 
-class UpdownioApiClient
+final class UpdownioApiClient
 {
     private const ACCEPT_ENCODING_AUTO = '';
 
@@ -51,7 +51,8 @@ class UpdownioApiClient
     }
 
     /**
-     * @template T = $as
+     * @template T
+     * @param class-string<T> $as
      * @return ?T
      * @throws GuzzleException
      */
