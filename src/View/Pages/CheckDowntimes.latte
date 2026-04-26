@@ -1,0 +1,24 @@
+{extends '../Layout/Base.latte'}
+{parameters
+    DlangAT\StatusPage\Model\Check $check,
+    DlangAT\StatusPage\Model\Downtime[] $downtimes,
+}
+{var $navGroup = 'downtimes'}
+{var $title = 'Downtimes · ' . $check->getTitle()}
+
+{block main}
+    <section class="alert alert-light d-inline-block">
+        <h2 class="h6">Current status</h2>
+        <div class="d-flex">
+            {embed '../Components/StatusIndicator.latte', check: $check}{/embed}
+            <a class="link-underline-info ms-2" href="{$check->getSubPageLink()}">→ Details</a>
+        </div>
+    </section>
+
+    <section>
+        <h2 class="visually-hidden">Downtimes list</h2>
+        <div class="table-responsive">
+            {embed '../Components/DowntimesTable.latte', downtimes: $downtimes}{/embed}
+        </div>
+    </section>
+{/block}

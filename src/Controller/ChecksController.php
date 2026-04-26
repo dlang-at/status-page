@@ -63,7 +63,7 @@ final class ChecksController extends ControllerBase
 
         $downtimes = $downtimeRepository->getByCheck($token);
 
-        return $this->templateEngine->render($response, 'Pages/Downtimes.latte', [
+        return $this->templateEngine->render($response, 'Pages/CheckDowntimes.latte', [
             'check' => $check,
             'downtimes' => $downtimes,
         ]);
