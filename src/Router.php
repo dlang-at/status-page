@@ -17,7 +17,9 @@ final class Router
     {
         $app->addRoutingMiddleware();
 
-        $app->addMiddleware(new DefaultHeaderMiddleware('Cache-Control', 'max-age=60'));
+        if ($_ENV['APP_ENV'] === 'prod') {
+            $app->addMiddleware(new DefaultHeaderMiddleware('Cache-Control', 'max-age=60'));
+        }
 
         $app->redirect('/', '/dashboard', 301);
         $app->get('/checks', [ChecksController::class, 'index']);

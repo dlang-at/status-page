@@ -30,10 +30,14 @@ final class RootController extends ControllerBase
         ]);
     }
 
-    public function legal(Request $request, Response $response): Response
+    public function legal(Request $request, Response $response, Container $container): Response
     {
+        if ($container->get('isProd')) {
+            $response = $response->withHeader('Cache-Control', 'max-age=86400');
+        }
+
         return $this->templateEngine->render($response, 'Pages/Legal.latte', [
             'legalPageText' => $_ENV['PAGE_LEGAL_TEXT'],
-        ])->withHeader('Cache-Control', 'max-age=86400');
+        ]);
     }
 }
