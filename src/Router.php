@@ -26,6 +26,7 @@ final class Router
         $app->get('/dashboard', [RootController::class, 'dashboard']);
         $app->redirect('/dashboard/', '/dashboard', 301);
         $app->get('/legal', [RootController::class, 'legal']);
+        $app->redirect('/legal/', '/legal', 301);
 
         if ($_ENV['APP_ENV'] === 'dev') {
             $errorMiddleware = $app->addErrorMiddleware(true, true, true);
