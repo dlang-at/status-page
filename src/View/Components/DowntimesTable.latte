@@ -1,6 +1,6 @@
 {parameters DlangAT\StatusPage\Model\Downtime[] $downtimes}
 
-<table class="table table-striped">
+<table class="table table-hover table-responsive table-sm table-striped align-middle">
     <thead>
     <tr>
         <th class="text-end">Start</th>
@@ -12,7 +12,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr n:foreach="$downtimes as $downtime" class="align-middle">
+    <tr n:foreach="$downtimes as $downtime">
         <td class="text-end font-monospace">{$downtime->startedAt | formatDateTime}</td>
         <td class="text-end font-monospace">{$downtime->endedAt | formatDateTime}</td>
         <td class="text-end font-monospace">{$downtime->duration | formatDuration}</td>
