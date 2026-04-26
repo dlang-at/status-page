@@ -1,7 +1,11 @@
 {extends '../Layout/Base.latte'}
-{parameters DlangAT\StatusPage\Model\Check[] $checks, int $downCount}
+{parameters
+    DlangAT\StatusPage\Model\Check[] $checks,
+    ?DlangAT\StatusPage\Model\Dashboard $dashboard = null,
+    int $downCount,
+}
 {var $navGroup = 'dashboard'}
-{var $title = 'Dashboard'}
+{var $title = ($dashboard === null) ? 'Dashboard' : 'Dashboard: ' . $dashboard->title}
 
 {block main}
     {embed '../Components/DashboardEntries.latte', checks: $checks}{/embed}

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace DlangAT\StatusPage;
 
 use DlangAT\StatusPage\Controller\ChecksController;
+use DlangAT\StatusPage\Controller\DashboardsController;
 use DlangAT\StatusPage\Controller\ErrorPageController;
 use DlangAT\StatusPage\Controller\RootController;
 use DlangAT\StatusPage\Middleware\DefaultHeaderMiddleware;
@@ -32,6 +33,8 @@ final class Router
         $app->get('/checks/{token}/downtimes/{page}/', [ChecksController::class, 'byTokenDowntimesByPageRedirect']);
         $app->get('/dashboard', [RootController::class, 'dashboard']);
         $app->redirect('/dashboard/', '/dashboard', 301);
+        $app->get('/dashboards/{slug}', [DashboardsController::class, 'bySlug']);
+        $app->get('/dashboards/{slug}/', [DashboardsController::class, 'bySlugRedirect']);
         $app->get('/legal', [RootController::class, 'legal']);
         $app->redirect('/legal/', '/legal', 301);
 
