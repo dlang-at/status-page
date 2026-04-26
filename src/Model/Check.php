@@ -57,6 +57,11 @@ final class Check
         return '/checks/' . urlencode($this->token);
     }
 
+    public function getDowntimesSubPageLink(int $page = 1): string
+    {
+        return '/checks/' . urlencode($this->token) . '/downtimes/' . $page;
+    }
+
     public function getTitle(): string
     {
         return $this->alias ?? $this->url;

@@ -13,6 +13,9 @@ use Slim\Exception\HttpNotFoundException;
 
 final class ChecksController extends ControllerBase
 {
+    private const UPDOWN_API_PAGE_LIMIT = 999;
+    private const UPDOWN_API_PAGE_SIZE = 100;
+
     public function byToken(
         Request $request,
         Response $response,
@@ -55,26 +58,6 @@ final class ChecksController extends ControllerBase
             ->withHeader('Location', '/checks/' . urlencode($token));
     }
 
-    public function byTokenDowntimes(
-        Request $request,
-        Response $response,
-        string $token,
-        CheckRepository $checkRepository,
-        DowntimeRepository $downtimeRepository,
-    ): Response {
-        $check = $checkRepository->getByToken($token);
-        if ($check === null) {
-            throw new HttpNotFoundException($request);
-        }
-
-        $downtimes = $downtimeRepository->getByCheck($token);
-
-        return $this->templateEngine->render($response, 'Pages/CheckDowntimes.latte', [
-            'check' => $check,
-            'downtimes' => $downtimes,
-        ]);
-    }
-
     public function byTokenDowntimesRedirect(
         Request $request,
         Response $response,
@@ -88,7 +71,58 @@ final class ChecksController extends ControllerBase
 
         return $response
             ->withStatus(301)
-            ->withHeader('Location', '/checks/' . urlencode($token) . '/downtimes');
+            ->withHeader('Location', '/checks/' . urlencode($token) . '/downtimes/1');
+    }
+
+    public function byTokenDowntimesByPage(
+        Request $request,
+        Response $response,
+        string $token,
+        string $page,
+        CheckRepository $checkRepository,
+        DowntimeRepository $downtimeRepository,
+    ): Response {
+        $pageNum = filter_var($page, FILTER_VALIDATE_INT);
+        if (($pageNum === false) || ($pageNum > self::UPDOWN_API_PAGE_LIMIT)) {
+            throw new HttpNotFoundException($request);
+        }
+
+        $check = $checkRepository->getByToken($token);
+        if ($check === null) {
+            throw new HttpNotFoundException($request);
+        }
+
+        $downtimes = $downtimeRepository->getByCheck($token, $pageNum);
+
+        return $this->templateEngine->render($response, 'Pages/CheckDowntimes.latte', [
+            'check' => $check,
+            'downtimes' => $downtimes,
+            'page' => $pageNum,
+            'pageLimit' => self::UPDOWN_API_PAGE_LIMIT,
+            'pageSize' => self::UPDOWN_API_PAGE_SIZE,
+        ]);
+    }
+
+    public function byTokenDowntimesByPageRedirect(
+        Request $request,
+        Response $response,
+        string $token,
+        string $page,
+        CheckRepository $checkRepository,
+    ): Response {
+        $pageNum = filter_var($page, FILTER_VALIDATE_INT);
+        if (($pageNum === false) || ($pageNum > self::UPDOWN_API_PAGE_LIMIT)) {
+            throw new HttpNotFoundException($request);
+        }
+
+        $check = $checkRepository->getByToken($token);
+        if ($check === null) {
+            throw new HttpNotFoundException($request);
+        }
+
+        return $response
+            ->withStatus(301)
+            ->withHeader('Location', '/checks/' . urlencode($token) . '/downtimes/' . urlencode($page));
     }
 
     public function index(

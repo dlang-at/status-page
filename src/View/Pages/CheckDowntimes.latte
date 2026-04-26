@@ -2,9 +2,14 @@
 {parameters
     DlangAT\StatusPage\Model\Check $check,
     DlangAT\StatusPage\Model\Downtime[] $downtimes,
+    int $page,
+    int $pageLimit,
+    int $pageSize,
 }
 {var $navGroup = 'downtimes'}
 {var $title = 'Downtimes · ' . $check->getTitle()}
+{var $downtimesCount = count($downtimes)}
+{var $finalPage = ($downtimesCount < 100)}
 
 {block main}
     <section class="alert alert-light d-inline-block">
@@ -17,8 +22,36 @@
 
     <section>
         <h2 class="visually-hidden">Downtimes list</h2>
-        <div n:if="count($downtimes) === 0" class="mt-5">
-            <em>No downtimes recorded.</em>
+
+        <nav n:if="!$finalPage || ($page !== 1)">
+            <ul class="pagination justify-content-end">
+                <li class="page-item">
+                    <a n:if="$page === 1" class="page-link disabled">« Most recent</a>
+                    <a n:else class="page-link" href="{$check->getDowntimesSubPageLink(1)}">« Most recent</a>
+                </li>
+                <li class="page-item">
+                    <a n:if="$page === 1" class="page-link disabled">‹ Newer</a>
+                    <a n:else class="page-link" href="{$check->getDowntimesSubPageLink($page - 1)}">‹ Newer</a>
+                </li>
+                <li n:if="$page > 1" class="page-item">
+                    <a class="page-link" href="{$check->getDowntimesSubPageLink($page - 1)}">{$page - 1}</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link active" href="{$check->getDowntimesSubPageLink($page)}">{$page}</a>
+                </li>
+                <li n:if="!$finalPage && $page < $pageLimit" class="page-item">
+                    <a class="page-link" href="{$check->getDowntimesSubPageLink($page + 1)}">{$page + 1}</a>
+                </li>
+                <li class="page-item">
+                    <a n:if="$finalPage || ($page >= $pageLimit)" class="page-link disabled">Older ›</a>
+                    <a n:else class="page-link" href="{$check->getDowntimesSubPageLink($page + 1)}">Older ›</a>
+                </li>
+            </ul>
+        </nav>
+
+        <div n:if="$downtimesCount === 0" class="mt-5">
+            <em n:if="$page === 1">No downtimes recorded.</em>
+            <em n:else>No further historic data available.</em>
         </div>
         <div n:else class="table-responsive">
             {embed '../Components/DowntimesTable.latte', downtimes: $downtimes}{/embed}

@@ -152,3 +152,8 @@
     --bs-btn-disabled-bg: transparent;
     --bs-btn-disabled-border-color: #b03931;
 }
+
+.pagination {
+    --bs-pagination-active-bg: #b03931;
+    --bs-pagination-active-border-color: #b03931;
+}

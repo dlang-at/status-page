@@ -21,8 +21,10 @@ final class Router
         $app->redirect('/checks/', '/checks', 301);
         $app->get('/checks/{token}', [ChecksController::class, 'byToken']);
         $app->get('/checks/{token}/', [ChecksController::class, 'byTokenRedirect']);
-        $app->get('/checks/{token}/downtimes', [ChecksController::class, 'byTokenDowntimes']);
+        $app->get('/checks/{token}/downtimes', [ChecksController::class, 'byTokenDowntimesRedirect']);
         $app->get('/checks/{token}/downtimes/', [ChecksController::class, 'byTokenDowntimesRedirect']);
+        $app->get('/checks/{token}/downtimes/{page}', [ChecksController::class, 'byTokenDowntimesByPage']);
+        $app->get('/checks/{token}/downtimes/{page}/', [ChecksController::class, 'byTokenDowntimesByPageRedirect']);
         $app->get('/dashboard', [RootController::class, 'dashboard']);
         $app->redirect('/dashboard/', '/dashboard', 301);
         $app->get('/legal', [RootController::class, 'legal']);
