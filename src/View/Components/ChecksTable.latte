@@ -9,7 +9,7 @@
         <th>Last status change</th>
         <th>TLS certificate expiry</th>
         <th>Domain registration expiry</th>
-        <th></th>
+        <th><span class="visually-hidden">Actions</span></th>
     </tr>
     </thead>
     <tbody>
@@ -57,8 +57,9 @@
             {/if}
         </td>
         <td>
-            <div class="btn-group" role="group">
+            <div class="btn-group btn-group-sm" role="group">
                 <a class="btn btn-outline-secondary" href="{$check->url}">Visit</a>
+                <a class="btn btn-outline-primary" href="{$check->getSubPageLink()}/downtimes">Downtimes</a>
                 <a class="btn btn-primary" href="{$check->getSubPageLink()}">Details</a>
             </div>
         </td>

@@ -10,6 +10,8 @@ use GuzzleHttp\Exception\GuzzleException;
 
 class UpdownioApiClient
 {
+    private const ACCEPT_ENCODING_AUTO = '';
+
     private Client $client;
 
     public function __construct()
@@ -18,6 +20,9 @@ class UpdownioApiClient
 
         $this->client = new Client([
             'base_uri' => 'https://updown.io/api/',
+            'curl' => [
+                CURLOPT_ACCEPT_ENCODING => self::ACCEPT_ENCODING_AUTO,
+            ],
             'headers' => [
                 'Accept' => 'application/json',
                 'X-API-KEY' => $_ENV['UPDOWNIO_API_KEY'],
@@ -48,6 +53,7 @@ class UpdownioApiClient
     /**
      * @template T = $as
      * @return ?T
+     * @throws GuzzleException
      */
     public function getAs(string $resource, string $as, ?array $query = null): ?object
     {
@@ -64,9 +70,20 @@ class UpdownioApiClient
         return $this->map($json, $as);
     }
 
-    public function getAsArrayOf(string $resource, string $as, ?array $query = null): array
+    /**
+     * @throws GuzzleException
+     */
+    public function getAsArrayOf(string $resource, string $as, ?array $query = null): ?array
     {
-        $raw = $this->get($resource, $query);
+        try {
+            $raw = $this->get($resource, $query);
+        } catch (GuzzleException $ex) {
+            if ($ex->getCode() === 404) {
+                return null;
+            }
+            throw $ex;
+        }
+
         $json = json_decode($raw, true, JSON_THROW_ON_ERROR);
         return array_map(function ($item) use ($as) {
             return $this->map($item, $as);

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace DlangAT\StatusPage\Controller;
 
 use DlangAT\StatusPage\Repository\CheckRepository;
+use DlangAT\StatusPage\Repository\DowntimeRepository;
 use DlangAT\StatusPage\Repository\MetricsRepository;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
@@ -45,7 +46,43 @@ final class ChecksController extends ControllerBase
 
         return $response
             ->withStatus(301)
-            ->withHeader('Location', '/checks/' . $token);
+            ->withHeader('Location', '/checks/' . urlencode($token));
+    }
+
+    public function byTokenDowntimes(
+        Request $request,
+        Response $response,
+        string $token,
+        CheckRepository $checkRepository,
+        DowntimeRepository $downtimeRepository,
+    ): Response {
+        $check = $checkRepository->getByToken($token);
+        if ($check === null) {
+            throw new HttpNotFoundException($request);
+        }
+
+        $downtimes = $downtimeRepository->getByCheck($token);
+
+        return $this->templateEngine->render($response, 'Pages/Downtimes.latte', [
+            'check' => $check,
+            'downtimes' => $downtimes,
+        ]);
+    }
+
+    public function byTokenDowntimesRedirect(
+        Request $request,
+        Response $response,
+        string $token,
+        CheckRepository $checkRepository,
+    ): Response {
+        $check = $checkRepository->getByToken($token);
+        if ($check === null) {
+            throw new HttpNotFoundException($request);
+        }
+
+        return $response
+            ->withStatus(301)
+            ->withHeader('Location', '/checks/' . urlencode($token) . '/downtimes');
     }
 
     public function index(

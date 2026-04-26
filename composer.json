@@ -16,6 +16,7 @@
     "minimum-stability": "stable",
     "require": {
         "php": "^8.4",
+        "ext-curl": "*",
         "guzzlehttp/guzzle": "^7.10",
         "guzzlehttp/psr7": "^2.9",
         "latte/latte": "^3.1",

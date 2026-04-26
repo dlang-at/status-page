@@ -20,6 +20,22 @@ final class TemplateEngine
     private function setupFilters()
     {
         $this->latte->addFilter(
+            'formatDuration',
+            function (int $seconds): string {
+                $days = intdiv($seconds, 86400);
+                $seconds %= 86400;
+
+                $hours = intdiv($seconds, 3600);
+                $seconds %= 3600;
+
+                $minutes = intdiv($seconds, 60);
+                $seconds %= 60;
+
+                return sprintf('%d:%02d:%02d:%02d', $days, $hours, $minutes, $seconds);
+            }
+        );
+
+        $this->latte->addFilter(
             'formatCheckInterval',
             function (int $seconds): string {
                 if ($seconds >= 3600) {
