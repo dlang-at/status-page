@@ -18,8 +18,11 @@ final class Router
 
         $app->redirect('/', '/dashboard', 301);
         $app->get('/checks', [ChecksController::class, 'index']);
+        $app->redirect('/checks/', '/checks', 301);
         $app->get('/checks/{token}', [ChecksController::class, 'byToken']);
+        $app->get('/checks/{token}/', [ChecksController::class, 'byTokenRedirect']);
         $app->get('/dashboard', [RootController::class, 'dashboard']);
+        $app->redirect('/dashboard/', '/dashboard', 301);
         $app->get('/legal', [RootController::class, 'legal']);
 
         if ($_ENV['APP_ENV'] === 'dev') {

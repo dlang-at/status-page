@@ -32,6 +32,22 @@ final class ChecksController extends ControllerBase
         ]);
     }
 
+    public function byTokenRedirect(
+        Request $request,
+        Response $response,
+        string $token,
+        CheckRepository $checkRepository,
+    ): Response {
+        $check = $checkRepository->getByToken($token);
+        if ($check === null) {
+            throw new HttpNotFoundException($request);
+        }
+
+        return $response
+            ->withStatus(301)
+            ->withHeader('Location', '/checks/' . $token);
+    }
+
     public function index(
         Request $request,
         Response $response,
