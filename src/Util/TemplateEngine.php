@@ -6,18 +6,21 @@ namespace DlangAT\StatusPage\Util;
 
 use DateTimeInterface;
 use Latte\Engine;
+use Psr\Container\ContainerInterface as Container;
 use Psr\Http\Message\ResponseInterface as Response;
 
 final class TemplateEngine
 {
     public function __construct(
+        private Container $container,
         private Engine $latte,
         private string $dateTimeFormat,
     ) {
         $this->setupFilters();
+        $this->setupFunctions();
     }
 
-    private function setupFilters()
+    private function setupFilters(): void
     {
         $this->latte->addFilter(
             'formatDuration',
@@ -55,6 +58,13 @@ final class TemplateEngine
 
         $this->latte->addFilter('formatUptime', function (float $uptime): string {
             return number_format($uptime, 2, '.') . ' %';
+        });
+    }
+
+    public function setupFunctions(): void
+    {
+        $this->latte->addFunction('di', function (string $name) {
+            return $this->container->get($name);
         });
     }
 

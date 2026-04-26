@@ -70,7 +70,7 @@ final class DI
             ResponseFactoryInterface::class => \DI\get(HttpFactory::class),
 
             TemplateEngine::class => function (Container $container, LatteEngine $engine) {
-                return new TemplateEngine($engine, $container->get('format.datetime'));
+                return new TemplateEngine($container, $engine, $container->get('format.datetime'));
             }
         ];
     }
