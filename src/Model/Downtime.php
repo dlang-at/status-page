@@ -20,11 +20,6 @@ final class Downtime
     ) {
     }
 
-    public function getSubPageLink():string
-    {
-        return '/downtimes/' . urldecode($this->id);
-    }
-
     public static function map(?array $data): ?self
     {
         if ($data === null) {

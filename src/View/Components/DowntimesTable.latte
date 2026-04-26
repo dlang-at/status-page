@@ -7,7 +7,6 @@
         <th class="text-end">End</th>
         <th class="text-end">Duration</th>
         <th class="text-start">Error details</th>
-        <th><span class="visually-hidden">Actions</span></th>
     </tr>
     </thead>
     <tbody>
@@ -16,7 +15,6 @@
         <td class="text-end font-monospace">{$downtime->endedAt | formatDateTime}</td>
         <td class="text-end font-monospace">{$downtime->duration | formatDuration}</td>
         <td class="text-start text-truncate">{$downtime->error}</td>
-        <td><a class="btn btn-sm btn-primary" href="{$downtime->getSubPageLink()}">Details</a></td>
     </tr>
     </tbody>
 </table>
