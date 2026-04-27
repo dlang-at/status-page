@@ -36,6 +36,28 @@ final class DI
 
             Dotenv::class => $dotenv,
 
+            'error.display_details' =>  function () {
+                if (!isset($_ENV['ERROR_DISPLAY_DETAILS'])) {
+                    return false;
+                }
+
+                return filter_var($_ENV['ERROR_DISPLAY_DETAILS'], FILTER_VALIDATE_BOOL);
+            },
+
+            'error.log.enabled' =>  function () {
+                if (!isset($_ENV['ERROR_DO_LOG'])) {
+                    return false;
+                }
+                return filter_var($_ENV['ERROR_DO_LOG'], FILTER_VALIDATE_BOOL);
+            },
+
+            'error.log.details' =>  function () {
+                if (!isset($_ENV['ERROR_DO_LOG_DETAILS'])) {
+                    return false;
+                }
+                return filter_var($_ENV['ERROR_DO_LOG_DETAILS'], FILTER_VALIDATE_BOOL);
+            },
+
             'format.datetime' => \DI\env('DATETIME_FORMAT'),
 
             LatteFileLoader::class => function () {
@@ -95,6 +117,7 @@ final class DI
         $dotenv->load();
 
         $dotenv->required('APP_ENV')->allowedValues(['prod', 'dev']);
+        $dotenv->required('APP_TITLE')->notEmpty();
         $dotenv->ifPresent('DATETIME_FORMAT')->notEmpty();
         $dotenv->required('PAGE_LEGAL_LABEL')->notEmpty();
         $dotenv->required('PAGE_LEGAL_TEXT')->notEmpty();

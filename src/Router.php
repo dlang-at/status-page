@@ -49,9 +49,9 @@ final class Router
         if ($_ENV['APP_ENV'] === 'dev') {
             $errorMiddleware = $app->addErrorMiddleware(true, true, true);
         } else {
-            $displayErrorDetails = (bool)($_ENV['ERROR_DISPLAY_DETAILS'] ?? false);
-            $logErrors = (bool)($_ENV['ERROR_DO_LOG'] ?? false);
-            $logErrorDetails = (bool)($_ENV['ERROR_DO_LOG_DETAILS'] ?? false);
+            $displayErrorDetails = $this->container->get('error.display_details');
+            $logErrors = $this->container->get('error.log.enabled');
+            $logErrorDetails = $this->container->get('error.log.details');
             $errorMiddleware = $app->addErrorMiddleware($displayErrorDetails, $logErrors, $logErrorDetails);
         }
 
