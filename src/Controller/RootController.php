@@ -4,31 +4,17 @@ declare(strict_types=1);
 
 namespace DlangAT\StatusPage\Controller;
 
-use DlangAT\StatusPage\Repository\CheckRepository;
 use Psr\Container\ContainerInterface as Container;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
 final class RootController extends ControllerBase
 {
-    public function dashboard(
-        Request $request,
+    public function index(
         Response $response,
-        CheckRepository $checkRepository,
+        \DI\Container $container,
     ): Response {
-        $checks = $checkRepository->getAll();
-
-        $downCount = 0;
-        foreach ($checks as $check) {
-            if (!$check->isUpConfirmed()) {
-                ++$downCount;
-            }
-        }
-
-        return $this->templateEngine->render($response, 'Pages/Dashboard.latte', [
-            'checks' => $checks,
-            'downCount' => $downCount,
-        ]);
+        return $container->call([DashboardsController::class, 'index'], [$response]);
     }
 
     public function legal(Request $request, Response $response, Container $container): Response

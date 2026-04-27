@@ -12,6 +12,15 @@ use Slim\Exception\HttpNotFoundException;
 
 final class DashboardsController extends ControllerBase
 {
+    public function index(
+        Response $response,
+        DashboardRepository $dashboardRepository,
+    ): Response {
+        return $response
+            ->withStatus(301)
+            ->withHeader('Location', $dashboardRepository->getFirst()->getSubPageLink());
+    }
+
     public function bySlug(
         Request $request,
         Response $response,

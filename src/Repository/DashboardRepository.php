@@ -46,6 +46,12 @@ final class DashboardRepository
         return $this->getMapped();
     }
 
+    public function getFirst(): ?Dashboard
+    {
+        $mapped = $this->getMapped();
+        return reset($mapped);
+    }
+
     public function hasBySlug(string $slug): bool
     {
         return array_key_exists($slug, $this->getData());

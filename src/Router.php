@@ -22,7 +22,7 @@ final class Router
             $app->addMiddleware(new DefaultHeaderMiddleware('Cache-Control', 'max-age=60'));
         }
 
-        $app->redirect('/', '/dashboard', 301);
+        $app->get('/', [RootController::class, 'index']);
         $app->get('/checks', [ChecksController::class, 'index']);
         $app->redirect('/checks/', '/checks', 301);
         $app->get('/checks/{token}', [ChecksController::class, 'byToken']);
@@ -31,8 +31,6 @@ final class Router
         $app->get('/checks/{token}/downtimes/', [ChecksController::class, 'byTokenDowntimesRedirect']);
         $app->get('/checks/{token}/downtimes/{page}', [ChecksController::class, 'byTokenDowntimesByPage']);
         $app->get('/checks/{token}/downtimes/{page}/', [ChecksController::class, 'byTokenDowntimesByPageRedirect']);
-        $app->get('/dashboard', [RootController::class, 'dashboard']);
-        $app->redirect('/dashboard/', '/dashboard', 301);
         $app->get('/dashboards/{slug}', [DashboardsController::class, 'bySlug']);
         $app->get('/dashboards/{slug}/', [DashboardsController::class, 'bySlugRedirect']);
         $app->get('/legal', [RootController::class, 'legal']);
