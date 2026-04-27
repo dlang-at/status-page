@@ -60,6 +60,6 @@ final class DashboardsController extends ControllerBase
 
         return $response
             ->withStatus(301)
-            ->withHeader('Location', '/dashboard/' . urlencode($slug));
+            ->withHeader('Location', '/dashboards/' . urlencode($slug));
     }
 }
