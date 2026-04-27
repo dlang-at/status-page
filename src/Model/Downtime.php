@@ -15,7 +15,7 @@ final class Downtime
         public string $error,
         public DateTimeImmutable $startedAt,
         public ?DateTimeImmutable $endedAt,
-        public int $duration,
+        public ?int $duration,
         public bool $partial,
     ) {
     }

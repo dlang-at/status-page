@@ -12,8 +12,16 @@
     <tbody>
     <tr n:foreach="$downtimes as $downtime">
         <td class="text-end font-monospace">{$downtime->startedAt | formatDateTime}</td>
-        <td class="text-end font-monospace">{$downtime->endedAt | formatDateTime}</td>
-        <td class="text-end font-monospace">{$downtime->duration | formatDuration}</td>
+        {if $downtime->endedAt !== null}
+            <td class="text-end font-monospace">{$downtime->endedAt | formatDateTime}</td>
+        {else}
+            <td class="text-end"><i>ongoing</i></td>
+        {/if}
+        {if $downtime->duration !== null}
+            <td class="text-end font-monospace">{$downtime->duration | formatDuration}</td>
+        {else}
+            <td class="text-end"><i>n/a</i></td>
+        {/if}
         <td class="text-start text-truncate">{$downtime->error}</td>
     </tr>
     </tbody>
