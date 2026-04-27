@@ -8,6 +8,12 @@
 {var $title = ($dashboard === null) ? 'Dashboard' : 'Dashboard: ' . $dashboard->title}
 
 {block main}
+    {if ($dashboard !== null) && !empty($dashboard->description)}
+        <div class="text-center bg-body-tertiary border rounded-3 mb-4 p-4">
+            {$dashboard->description | noescape}
+        </div>
+    {/if}
+
     {embed '../Components/DashboardEntries.latte', checks: $checks}{/embed}
 
     {if $downCount > 0}
