@@ -10,6 +10,7 @@ title=Status page 2
 description="…"
 c[]=0000
 c[]=abcd
+hide_summary=true
 
 [foobar]
 title=Foo Bar

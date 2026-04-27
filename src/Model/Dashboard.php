@@ -11,6 +11,7 @@ final class Dashboard
         public string $title,
         public string $description,
         public array $checkTokens,
+        public bool $hideSummary,
     ) {
     }
 
@@ -36,6 +37,7 @@ final class Dashboard
             $data['title'],
             $data['description'],
             $checkTokens,
+            (isset($data['hide_summary'])) ? filter_var($data['hide_summary'], FILTER_VALIDATE_BOOL) : false,
         );
     }
 }

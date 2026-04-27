@@ -6,6 +6,7 @@
 }
 {var $navGroup = 'dashboard'}
 {var $title = ($dashboard === null) ? 'Dashboard' : 'Dashboard: ' . $dashboard->title}
+{var $hideSummary = ($dashboard === null) ? false : $dashboard->hideSummary}
 
 {block main}
     {if ($dashboard !== null) && !empty($dashboard->description)}
@@ -16,19 +17,21 @@
 
     {embed '../Components/DashboardEntries.latte', checks: $checks}{/embed}
 
-    {if $downCount > 0}
-        <div class="alert alert-danger">
-            {$downCount}
+    {if !$hideSummary}
+        {if $downCount > 0}
+            <div class="alert alert-danger">
+                {$downCount}
             {if $downCount === 1}
-                service is
-            {else}
-                services are
-            {/if}
-            impacted.
-        </div>
-    {else}
-        <div class="alert alert-success">
-            All services are up.
-        </div>
+                    service is
+                {else}
+                    services are
+                {/if}
+                impacted.
+            </div>
+        {else}
+            <div class="alert alert-success">
+                All services are up.
+            </div>
+        {/if}
     {/if}
 {/block}
