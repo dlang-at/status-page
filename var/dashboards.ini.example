@@ -1,0 +1,18 @@
+[1]
+title=Status page 1
+description="Lorem ipsum…"
+c[]=1234
+c[]=5678
+c[]=abcd
+
+[2]
+title=Status page 2
+description="…"
+c[]=0000
+c[]=abcd
+
+[foobar]
+title=Foo Bar
+description="HTML is <em>supported</em>."
+c[]=as1f
+c[]=zx30
