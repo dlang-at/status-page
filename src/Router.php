@@ -9,16 +9,26 @@ use DlangAT\StatusPage\Controller\DashboardsController;
 use DlangAT\StatusPage\Controller\ErrorPageController;
 use DlangAT\StatusPage\Controller\RootController;
 use DlangAT\StatusPage\Middleware\DefaultHeaderMiddleware;
+use DlangAT\StatusPage\Middleware\TelemetryMiddleware;
+use Psr\Container\ContainerInterface as Container;
 use Slim\App;
 use Slim\Exception\HttpNotFoundException;
 
 final class Router
 {
-    public static function install(App $app)
+    public function __construct(
+        private App $app,
+        private Container $container,
+        private TelemetryMiddleware $telemetryMiddleware,
+    ) {
+    }
+
+    public function install(): void
     {
+        $app = $this->app;
         $app->addRoutingMiddleware();
 
-        if ($_ENV['APP_ENV'] === 'prod') {
+        if ($this->container->get('isProd')) {
             $app->addMiddleware(new DefaultHeaderMiddleware('Cache-Control', 'max-age=60'));
         }
 
@@ -46,5 +56,9 @@ final class Router
         }
 
         $errorMiddleware->setErrorHandler(HttpNotFoundException::class, [ErrorPageController::class, 'notFound']);
+
+        if ($app->getContainer()->get('telemetry.enabled')) {
+            $app->addMiddleware($this->telemetryMiddleware);
+        }
     }
 }

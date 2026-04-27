@@ -15,7 +15,7 @@ final class WebAppBootstrapper
         $di = new DI($appRoot);
         $container = $di->makeContainer();
         $app = Bridge::create($container);
-        Router::install($app);
+        $container->get(Router::class)->install();
         $app->run();
     }
 }

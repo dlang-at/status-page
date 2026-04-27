@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace DlangAT\StatusPage;
 
 use DI\ContainerBuilder;
+use DlangAT\StatusPage\Middleware\TelemetryMiddleware;
 use DlangAT\StatusPage\Repository\DashboardRepository;
+use DlangAT\StatusPage\Util\IpAddressMasker;
 use DlangAT\StatusPage\Util\TemplateEngine;
 use Dotenv\Dotenv;
 use GuzzleHttp\Psr7\HttpFactory;
@@ -69,6 +71,18 @@ final class DI
 
             ResponseFactoryInterface::class => \DI\get(HttpFactory::class),
 
+            'telemetry.enabled' => function () {
+                if (!isset($_ENV['TELEMETRY_ENABLED'])) {
+                    return false;
+                }
+                return filter_var($_ENV['TELEMETRY_ENABLED'], FILTER_VALIDATE_BOOL);
+            },
+
+            TelemetryMiddleware::class => function (Container $container, IpAddressMasker $ipAddressMasker) {
+                $logFilePath = $container->get('path.var') . '/telemetry.log';
+                return new TelemetryMiddleware($ipAddressMasker, $logFilePath);
+            },
+
             TemplateEngine::class => function (Container $container, LatteEngine $engine) {
                 return new TemplateEngine($container, $engine, $container->get('format.datetime'));
             }
@@ -84,6 +98,7 @@ final class DI
         $dotenv->ifPresent('DATETIME_FORMAT')->notEmpty();
         $dotenv->required('PAGE_LEGAL_LABEL')->notEmpty();
         $dotenv->required('PAGE_LEGAL_TEXT')->notEmpty();
+        $dotenv->ifPresent('TELEMETRY_ENABLED')->isBoolean();
         $dotenv->required('UPDOWNIO_API_KEY')->notEmpty();
         $dotenv->ifPresent('UPDOWNIO_API_TIMEOUT')->isInteger();
 
