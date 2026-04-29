@@ -26,7 +26,7 @@ final class TelemetryMiddleware implements MiddlewareInterface
 
 
         $remoteAddress = $request->getServerParams()['REMOTE_ADDR'];
-        $remoteAddressMasked = $this->ipAddressMasker->mask($remoteAddress);
+        $remoteAddressMasked = $this->ipAddressMasker->mask($remoteAddress, true);
 
         $url = $request->getRequestTarget();
 
