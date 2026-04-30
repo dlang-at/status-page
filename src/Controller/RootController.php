@@ -12,10 +12,11 @@ use Slim\Exception\HttpInternalServerErrorException;
 final class RootController extends ControllerBase
 {
     public function index(
+        Request $request,
         Response $response,
         \DI\Container $container,
     ): Response {
-        return $container->call([DashboardsController::class, 'index'], [$response]);
+        return $container->call([DashboardsController::class, 'index'], [$request, $response]);
     }
 
     public function legal(Request $request, Response $response, Container $container): Response

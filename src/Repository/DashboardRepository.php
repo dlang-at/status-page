@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace DlangAT\StatusPage\Repository;
 
 use DlangAT\StatusPage\Model\Dashboard;
+use Exception;
 
 final class DashboardRepository
 {
@@ -19,7 +20,16 @@ final class DashboardRepository
     private function getData(): array
     {
         if ($this->data === null) {
-            $this->data = parse_ini_file($this->dashboardsFilePath, true, INI_SCANNER_RAW);
+            if (!file_exists($this->dashboardsFilePath)) {
+                $this->data = [];
+                return $this->data;
+            }
+
+            $iniData = parse_ini_file($this->dashboardsFilePath, true, INI_SCANNER_RAW);
+            if ($iniData === false) {
+                throw new Exception('Reading/parsing `dashboards.ini` failed.');
+            }
+            $this->data = $iniData;
         }
 
         return $this->data;
@@ -49,7 +59,13 @@ final class DashboardRepository
     public function getFirst(): ?Dashboard
     {
         $mapped = $this->getMapped();
-        return reset($mapped);
+        $first = reset($mapped);
+
+        if ($first === false) {
+            return null;
+        }
+
+        return $first;
     }
 
     public function hasBySlug(string $slug): bool
