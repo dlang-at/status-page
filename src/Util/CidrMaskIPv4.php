@@ -51,7 +51,41 @@ enum CidrMaskIPv4: string
 
     public function getPrefixBitCount(): int
     {
-        return (int)substr($this->name, 5);
+        return match ($this) {
+            self::Slash0 => 0,
+            self::Slash1 => 1,
+            self::Slash2 => 2,
+            self::Slash3 => 3,
+            self::Slash4 => 4,
+            self::Slash5 => 5,
+            self::Slash6 => 6,
+            self::Slash7 => 7,
+            self::Slash8 => 8,
+            self::Slash9 => 9,
+            self::Slash10 => 10,
+            self::Slash11 => 11,
+            self::Slash12 => 12,
+            self::Slash13 => 13,
+            self::Slash14 => 14,
+            self::Slash15 => 15,
+            self::Slash16 => 16,
+            self::Slash17 => 17,
+            self::Slash18 => 18,
+            self::Slash19 => 19,
+            self::Slash20 => 20,
+            self::Slash21 => 21,
+            self::Slash22 => 22,
+            self::Slash23 => 23,
+            self::Slash24 => 24,
+            self::Slash25 => 25,
+            self::Slash26 => 26,
+            self::Slash27 => 27,
+            self::Slash28 => 28,
+            self::Slash29 => 29,
+            self::Slash30 => 30,
+            self::Slash31 => 31,
+            self::Slash32 => 32,
+        };
     }
 
     public function getHostIdentifierBitCount(): int
