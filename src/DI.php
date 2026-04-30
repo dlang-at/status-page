@@ -120,7 +120,6 @@ final class DI
         $dotenv->required('APP_TITLE')->notEmpty();
         $dotenv->ifPresent('DATETIME_FORMAT')->notEmpty();
         $dotenv->required('PAGE_LEGAL_LABEL')->notEmpty();
-        $dotenv->required('PAGE_LEGAL_TEXT')->notEmpty();
         $dotenv->ifPresent('TELEMETRY_ENABLED')->isBoolean();
         $dotenv->required('UPDOWNIO_API_KEY')->notEmpty();
         $dotenv->ifPresent('UPDOWNIO_API_TIMEOUT')->isInteger();
