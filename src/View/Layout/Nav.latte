@@ -15,7 +15,7 @@
         <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
             <ul class="navbar-nav nav-underline">
 
-                <li class="nav-item dropdown">
+                <li class="nav-item dropdown" n:if="count($dashboardRepository->getAll()) > 0">
                     <a class={[nav-link, dropdown-toggle, 'p-3', active => ($navGroup === 'dashboard')]}
                        role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Dashboards
