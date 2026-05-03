@@ -1,0 +1,76 @@
+name: Deploy application
+on:
+  push:
+    branches: [production]
+jobs:
+  deploy:
+    name: Deploy web application
+    runs-on: ubuntu-24.04
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Set up SSH
+        env:
+          SSH_AUTH_SOCK: /tmp/ssh-agent.sock
+          SSH_HOST_KEY: ${{ secrets.SSH_HOST_KEY }}
+          SSH_HOST_NAME: ${{ secrets.SSH_HOST_NAME }}
+          SSH_USER_KEY: ${{ secrets.SSH_USER_KEY }}
+          SSH_USER_KEY_FILENAME: gha_user_key
+        run: |
+          mkdir -p "${HOME}/.ssh"
+          echo "${SSH_HOST_NAME} ${SSH_HOST_KEY}" >> "${HOME}/.ssh/known_hosts"
+          echo "${SSH_USER_KEY}" > "${HOME}/.ssh/${SSH_USER_KEY_FILENAME}"
+          chmod 600 "${HOME}/.ssh/${SSH_USER_KEY_FILENAME}"
+          ssh-agent -a "${SSH_AUTH_SOCK}" > /dev/null	
+          ssh-add "${HOME}/.ssh/${SSH_USER_KEY_FILENAME}"
+
+      - name: "rsync: Put app in maintenance mode"
+        env:
+          SSH_AUTH_SOCK: /tmp/ssh-agent.sock
+          SSH_DEST_PATH: ${{ secrets.SSH_DEST_PATH }}
+          SSH_HOST_NAME: ${{ secrets.SSH_HOST_NAME }}
+          SSH_USER_NAME: ${{ secrets.SSH_USER_NAME }}
+        run:
+          rsync -zq public/maintenance.php "${SSH_USER_NAME}@${SSH_HOST_NAME}:${SSH_DEST_PATH}/public/index.php"
+
+      - name: "SSH: Delete temporary files"
+        env:
+          SSH_AUTH_SOCK: /tmp/ssh-agent.sock
+          SSH_DEST_PATH: ${{ secrets.SSH_DEST_PATH }}
+          SSH_HOST_NAME: ${{ secrets.SSH_HOST_NAME }}
+          SSH_USER_NAME: ${{ secrets.SSH_USER_NAME }}
+        run: ssh "${SSH_USER_NAME}@${SSH_HOST_NAME}" -- rm -rf "${SSH_DEST_PATH}/var/tmp"
+
+      - name: "rsync: Update app code"
+        env:
+          SSH_AUTH_SOCK: /tmp/ssh-agent.sock
+          SSH_DEST_PATH: ${{ secrets.SSH_DEST_PATH }}
+          SSH_HOST_NAME: ${{ secrets.SSH_HOST_NAME }}
+          SSH_USER_NAME: ${{ secrets.SSH_USER_NAME }}
+        run: rsync -zqr --delete src/ "${SSH_USER_NAME}@${SSH_HOST_NAME}:${SSH_DEST_PATH}/src"
+
+      - name: "SSH: Update dependencies via Composer"
+        env:
+          SSH_AUTH_SOCK: /tmp/ssh-agent.sock
+          SSH_DEST_PATH: ${{ secrets.SSH_DEST_PATH }}
+          SSH_HOST_NAME: ${{ secrets.SSH_HOST_NAME }}
+          SSH_USER_NAME: ${{ secrets.SSH_USER_NAME }}
+        run: ssh "${SSH_USER_NAME}@${SSH_HOST_NAME}" -- composer update -d "${SSH_DEST_PATH}"
+
+      - name: "rsync: Update public static assets"
+        env:
+          SSH_AUTH_SOCK: /tmp/ssh-agent.sock
+          SSH_DEST_PATH: ${{ secrets.SSH_DEST_PATH }}
+          SSH_HOST_NAME: ${{ secrets.SSH_HOST_NAME }}
+          SSH_USER_NAME: ${{ secrets.SSH_USER_NAME }}
+        run: rsync -zqr --delete public/assets/ "${SSH_USER_NAME}@${SSH_HOST_NAME}:${SSH_DEST_PATH}/public/assets"
+
+      - name: "rsync: Disable maintenance mode"
+        env:
+          SSH_AUTH_SOCK: /tmp/ssh-agent.sock
+          SSH_DEST_PATH: ${{ secrets.SSH_DEST_PATH }}
+          SSH_HOST_NAME: ${{ secrets.SSH_HOST_NAME }}
+          SSH_USER_NAME: ${{ secrets.SSH_USER_NAME }}
+        run:
+          rsync -zq public/index.php "${SSH_USER_NAME}@${SSH_HOST_NAME}:${SSH_DEST_PATH}/public/index.php"
