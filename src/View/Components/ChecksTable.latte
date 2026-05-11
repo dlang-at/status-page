@@ -21,7 +21,7 @@
             {$check->getTitle()}
         </th>
         <td class="text-end">
-            {embed 'UptimeIndicator.latte', value: $check->uptime}{/embed}
+            {embed 'UptimeIndicator.latte', value: $check->uptime, asBadge: false}{/embed}
         </td>
         <td class="text-end">
             {$check->period | formatCheckInterval}
