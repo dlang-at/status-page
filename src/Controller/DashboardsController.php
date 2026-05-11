@@ -49,17 +49,22 @@ final class DashboardsController extends ControllerBase
             $checks[] = $check;
         }
 
-        $downCount = 0;
+        $checksAlert = [];
+        $checksUp = [];
         foreach ($checks as $check) {
-            if (!$check->isUpConfirmed()) {
-                ++$downCount;
+            if ($check->isUpConfirmed()) {
+                $checksUp[] = $check;
+            } else {
+                $checksAlert[] = $check;
             }
         }
 
+        unset($checks);
+
         return $this->templateEngine->render($response, 'Pages/Dashboard.latte', [
-            'checks' => $checks,
+            'checksAlert' => $checksAlert,
+            'checksUp' => $checksUp,
             'dashboard' => $dashboard,
-            'downCount' => $downCount,
         ]);
     }
 

@@ -1,11 +1,12 @@
 {extends '../Layout/Base.latte'}
 {parameters
-    DlangAT\StatusPage\Model\Check[] $checks,
+    DlangAT\StatusPage\Model\Check[] $checksAlert,
+    DlangAT\StatusPage\Model\Check[] $checksUp,
     ?DlangAT\StatusPage\Model\Dashboard $dashboard = null,
-    int $downCount,
 }
 {var $navGroup = 'dashboard'}
 {var $title = ($dashboard === null) ? 'Dashboard' : 'Dashboard: ' . $dashboard->title}
+{var int $alertCount = count($checksAlert)}
 {var $hideSummary = ($dashboard === null) ? false : $dashboard->hideSummary}
 
 {block main}
@@ -15,13 +16,14 @@
         </div>
     {/if}
 
-    {embed '../Components/DashboardEntries.latte', checks: $checks}{/embed}
+    {embed '../Components/DashboardEntries.latte', checksAlert: $checksAlert, checksUp: $checksUp}
+    {/embed}
 
     {if !$hideSummary}
-        {if $downCount > 0}
+        {if $alertCount > 0}
             <div class="alert alert-danger">
-                {$downCount}
-            {if $downCount === 1}
+                {$alertCount}
+            {if $alertCount === 1}
                     service is
                 {else}
                     services are

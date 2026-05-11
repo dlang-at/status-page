@@ -1,17 +1,16 @@
 {parameters
-    DlangAT\StatusPage\Model\Check[] $checks,
+    DlangAT\StatusPage\Model\Check[] $checksAlert,
+    DlangAT\StatusPage\Model\Check[] $checksUp,
     bool $gridView = true,
 }
 <section>
     <h2 class="visually-hidden">Services</h2>
-    <section>
+    <section n:if="count($checksAlert) > 0">
         <h3 class="visually-hidden">Alerts</h3>
         <div class="container-fluid g-0">
-            <ul class="{['row list-unstyled g-2' => $gridView, 'list-group' => !$gridView]}">
-                {foreach $checks as $check}
-                    {if !$check->isUpConfirmed()}
-                        {embed 'DashboardEntry.latte', check: $check}{/embed}
-                    {/if}
+            <ul class="{['row list-unstyled g-2' => $gridView, 'list-group mb-3' => !$gridView]}">
+                {foreach $checksAlert as $check}
+                    {embed 'DashboardEntry.latte', check: $check}{/embed}
                 {/foreach}
             </ul>
         </div>
@@ -20,10 +19,8 @@
         <h3 class="visually-hidden">Up</h3>
         <div class="container-fluid g-0">
             <ul class="{['row list-unstyled g-2' => $gridView, 'list-group mb-3' => !$gridView]}">
-                {foreach $checks as $check}
-                    {if $check->isUpConfirmed()}
-                        {embed 'DashboardEntry.latte', check: $check}{/embed}
-                    {/if}
+                {foreach $checksUp as $check}
+                    {embed 'DashboardEntry.latte', check: $check}{/embed}
                 {/foreach}
             </ul>
         </div>
