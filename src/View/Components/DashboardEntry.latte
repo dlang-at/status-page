@@ -1,5 +1,8 @@
-{parameters DlangAT\StatusPage\Model\Check $check}
-<li class="dashboard-entry col-12 col-md-6 col-xl-4 col-xxl-3">
+{parameters
+    DlangAT\StatusPage\Model\Check $check,
+    bool $gridView,
+}
+<li n:if="$gridView" class="dashboard-entry col-12 col-md-6 col-xl-4 col-xxl-3">
     <div class="card w-100 h-100">
         <a href="/checks/{$check->token}" class="text-reset text-decoration-none">
             <div n:block="|strip" class="card-header d-flex justify-content-between align-items-baseline">
@@ -12,5 +15,12 @@
                 </h3>
             </div>
         </a>
+    </div>
+</li>
+<li n:else class="list-group-item">
+    <div class="list-group list-group-horizontal">
+        <div class="list-group-item border-0">{embed 'StatusIndicator.latte', check: $check}{/embed}</div>
+        <div class="list-group-item border-0 flex-fill">{$check->getTitle()}</div>
+        <div class="list-group-item border-0">{embed 'UptimeIndicator.latte', value: $check->uptime}{/embed}</div>
     </div>
 </li>
