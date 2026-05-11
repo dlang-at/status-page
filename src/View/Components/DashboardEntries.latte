@@ -10,7 +10,7 @@
         <div class="container-fluid g-0">
             <ul class="{['row list-unstyled g-2' => $gridView, 'list-group mb-3' => !$gridView]}">
                 {foreach $checksAlert as $check}
-                    {embed 'DashboardEntry.latte', check: $check}{/embed}
+                    {embed 'DashboardEntry.latte', check: $check, gridView: $gridView}{/embed}
                 {/foreach}
             </ul>
         </div>
@@ -20,7 +20,7 @@
         <div class="container-fluid g-0">
             <ul class="{['row list-unstyled g-2' => $gridView, 'list-group mb-3' => !$gridView]}">
                 {foreach $checksUp as $check}
-                    {embed 'DashboardEntry.latte', check: $check}{/embed}
+                    {embed 'DashboardEntry.latte', check: $check, gridView: $gridView}{/embed}
                 {/foreach}
             </ul>
         </div>
