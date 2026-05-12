@@ -4,10 +4,13 @@ declare(strict_types=1);
 
 namespace DlangAT\StatusPage\Controller;
 
+use DlangAT\StatusPage\Model\DashboardViewMode;
+use DlangAT\StatusPage\Model\UserSettings;
 use DlangAT\StatusPage\Repository\CheckRepository;
 use DlangAT\StatusPage\Repository\DashboardRepository;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
+use Slim\Exception\HttpBadRequestException;
 use Slim\Exception\HttpNotFoundException;
 
 final class DashboardsController extends ControllerBase
@@ -34,6 +37,7 @@ final class DashboardsController extends ControllerBase
         string $slug,
         CheckRepository $checkRepository,
         DashboardRepository $dashboardRepository,
+        UserSettings $userSettings,
     ): Response {
         $dashboard = $dashboardRepository->getBySlug($slug);
         if ($dashboard === null) {
@@ -65,7 +69,40 @@ final class DashboardsController extends ControllerBase
             'checksAlert' => $checksAlert,
             'checksUp' => $checksUp,
             'dashboard' => $dashboard,
+            'userSettings' => $userSettings,
         ]);
+    }
+
+    public function bySlugPost(
+        Request $request,
+        Response $response,
+        string $slug,
+        DashboardRepository $dashboardRepository,
+        UserSettings $userSettings,
+    ): Response {
+        $found = $dashboardRepository->hasBySlug($slug);
+        if (!$found) {
+            throw new HttpNotFoundException($request);
+        }
+
+        $data = $request->getParsedBody();
+        if (!is_array($data)) {
+            throw new HttpBadRequestException($request)->setDescription('Unsupported request body.');
+        }
+
+        if (isset($data['dashboard-view-mode'])) {
+            $dashboardViewMode = DashboardViewMode::tryFrom($data['dashboard-view-mode']);
+
+            if ($dashboardViewMode === null) {
+                throw new HttpBadRequestException($request, 'Bad `dashboard-view-mode`.');
+            }
+
+            $userSettings->setDashboardViewMode($dashboardViewMode);
+        }
+
+        return $response
+            ->withStatus(303)
+            ->withHeader('Location', '/dashboards/' . urlencode($slug));
     }
 
     public function bySlugRedirect(

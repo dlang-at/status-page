@@ -3,10 +3,12 @@
     DlangAT\StatusPage\Model\Check[] $checksAlert,
     DlangAT\StatusPage\Model\Check[] $checksUp,
     DlangAT\StatusPage\Model\Dashboard $dashboard,
+    DlangAT\StatusPage\Model\UserSettings $userSettings,
 }
 {var $navGroup = 'dashboard'}
 {var $title = 'Dashboard: ' . $dashboard->title}
 {var int $alertCount = count($checksAlert)}
+{var bool $gridView = $userSettings->getDashboardViewMode() === DlangAT\StatusPage\Model\DashboardViewMode::Grid}
 
 {block main}
     {if ($dashboard !== null) && !empty($dashboard->description)}
@@ -15,7 +17,23 @@
         </div>
     {/if}
 
-    {embed '../Components/DashboardEntries.latte', checksAlert: $checksAlert, checksUp: $checksUp}
+    <div class="d-flex justify-content-end mb-2" role="group">
+        <form class="btn-group btn-group-sm" method="post">
+            <button class="{[btn, btn-outline-primary, active => $gridView]}" type="submit">Grid</button>
+            <input type="hidden" name="dashboard-view-mode" value="grid">
+        </form>
+        <form class="btn-group btn-group-sm" method="post">
+            <input type="hidden" name="dashboard-view-mode" value="list">
+            <button class="{[btn, btn-outline-primary, active => !$gridView]}" type="submit">List</button>
+        </form>
+    </div>
+
+    {embed
+        '../Components/DashboardEntries.latte',
+        checksAlert: $checksAlert,
+        checksUp: $checksUp,
+        gridView: $gridView,
+    }
     {/embed}
 
     {if !$dashboard->hideSummary}
