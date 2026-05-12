@@ -44,26 +44,20 @@ final class DashboardsController extends ControllerBase
             throw new HttpNotFoundException($request);
         }
 
-        $checks = [];
+        $checksAlert = [];
+        $checksUp = [];
         foreach ($dashboard->checkTokens as $checkToken) {
             $check = $checkRepository->getByToken($checkToken);
             if ($check === null) {
                 continue;
             }
-            $checks[] = $check;
-        }
 
-        $checksAlert = [];
-        $checksUp = [];
-        foreach ($checks as $check) {
             if ($check->isUpConfirmed()) {
                 $checksUp[] = $check;
             } else {
                 $checksAlert[] = $check;
             }
         }
-
-        unset($checks);
 
         return $this->templateEngine->render($response, 'Pages/Dashboard.latte', [
             'checksAlert' => $checksAlert,
