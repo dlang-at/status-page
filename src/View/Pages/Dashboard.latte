@@ -6,7 +6,7 @@
     DlangAT\StatusPage\Model\UserSettings $userSettings,
 }
 {var $navGroup = 'dashboard'}
-{var $title = 'Dashboard: ' . $dashboard->title}
+{var $title = $dashboard->title}
 {var int $alertCount = count($checksAlert)}
 {var bool $gridView = $userSettings->getDashboardViewMode() === DlangAT\StatusPage\Model\DashboardViewMode::Grid}
 
