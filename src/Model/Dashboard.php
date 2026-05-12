@@ -10,6 +10,7 @@ final class Dashboard
         public string $slug,
         public string $title,
         public string $description,
+        public ?string $style,
         public array $checkTokens,
         public bool $hideSummary,
     ) {
@@ -36,6 +37,7 @@ final class Dashboard
             $slug,
             $data['title'],
             $data['description'],
+            $data['style'] ?? null,
             $checkTokens,
             (isset($data['hide_summary'])) ? filter_var($data['hide_summary'], FILTER_VALIDATE_BOOL) : false,
         );
